@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   word_count.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nqasem <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/19 01:08:32 by nqasem            #+#    #+#             */
-/*   Updated: 2025/02/19 01:08:40 by nqasem           ###   ########.fr       */
+/*   Created: 2024/12/11 09:47:29 by nqasem            #+#    #+#             */
+/*   Updated: 2024/12/11 09:47:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-char	*ft_strcat(char *dest, char *src)
+int	word_count(char const *s, char c)
 {
-	unsigned int	i;
-	unsigned int	j;
+	int	i;
 
 	i = 0;
-	while (dest[i] != '\0')
-		++i;
-	j = 0;
-	while (src[j] != '\0')
+	while (*s)
 	{
-		dest[i] = src[j];
-		i++;
-		++j;
+		while (*s == c)
+			s++;
+		if (*s)
+			i++;
+		while (*s && *s != c)
+			s++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (i);
 }
