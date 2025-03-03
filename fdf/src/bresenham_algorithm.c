@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:37:13 by nqasem            #+#    #+#             */
-/*   Updated: 2025/02/27 22:55:35 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/03 02:00:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ void	slope_less_then_one(int dx, int dy, t_map *a, t_map *b, t_data *fdf)
 				a->y--;
 			p += 2 * (ft_abs(dy) - ft_abs(dx));
 		}
-		draw_map(fdf, a->x, a->y, 0xFF0000);
+		draw_map(fdf, a->x, a->y, a->color, a->z);
 		printf("(%d, %d)\n", a->x, a->y);
+		printf("pixel: %d\n", fdf->pixel);
 	}
 }
 
@@ -77,8 +78,9 @@ void	slope_greater_then_one(int dx, int dy, t_map *a, t_map *b, t_data *fdf)
 			p += 2 * (ft_abs(dx) - ft_abs(dy));
 			a->x++;
 		}
-		draw_map(fdf, a->x, a->y, 0xFF0000);
+		draw_map(fdf, a->x, a->y, a->color, a->z);
 		printf("(%d, %d)\n", a->x, a->y);
+		printf("pixel: %d\n", fdf->pixel);
 	}
 }
 
@@ -87,29 +89,59 @@ int	sset_algo(t_data *fdf)
 	int		dx;
 	int		dy;
 	int		i;
+	int	pixel;
 	t_map	*a;
 	t_map	*b;
 
 	a = malloc(sizeof(t_map));
 	b = malloc(sizeof(t_map));
+	a->color = 0xFFFFFF;
+	b->color = 0xFFFFFF;
 	a->x = 0;
+	pixel = HEIGHT / fdf->height;
 	a->y = 0;
 	b->x = WIDTH - 1;
 	b->y = 0;
-	dx = b->x - a->x;
-	dy = b->y - a->y;
 	i = -1;
-	// 4/200 50
-	// if the slope is less than 1
-	// while (++i < WIDTH/fdf->width)
-	// {
-
-	// }
-	
-	if (ft_abs(dy) < ft_abs(dx))
-		slope_less_then_one(dx, dy, a, b, fdf);
-	else
-		slope_greater_then_one(dx, dy, a, b, fdf);
+	fdf->pixel = 0;
+	while (++i <= fdf->height)
+	{
+		a->z = i;
+		dx = b->x - a->x;
+		dy = b->y - a->y;
+		fdf->pixel += pixel;
+		if (ft_abs(dy) < ft_abs(dx))
+			slope_less_then_one(dx, dy, a, b, fdf);
+		else
+			slope_greater_then_one(dx, dy, a, b, fdf);
+		a->x = 0;
+		a->y += pixel;
+		b->y += pixel;
+		b->x = WIDTH - 1;
+	}
+	a->x = 0;
+	a->y = 0;
+	b->x = 0;
+	b->y = HEIGHT - 1;
+	i = -1;
+	fdf->pixel = 0;
+	pixel = WIDTH / fdf->width;
+	while (++i <= fdf->width)
+	{
+		a->z = i;
+		dx = b->x - a->x;
+		dy = b->y - a->y;
+		if (ft_abs(dy) < ft_abs(dx))
+			slope_less_then_one(dx, dy, a, b, fdf);
+		else
+			slope_greater_then_one(dx, dy, a, b, fdf);
+		a->y = 0;
+		a->x += pixel;
+		b->x += pixel;
+		b->y = HEIGHT - 1;
+		fdf->pixel += pixel;
+	}
+	free(a);
+	free(b);
 	return (0);
-	// if the slope is greater than 1
 }

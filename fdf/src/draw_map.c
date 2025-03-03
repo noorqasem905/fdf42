@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:35:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/02/27 22:53:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/03 01:29:21 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,20 @@ void	set_pixel(t_data *fdf, int x, int y, int color)
 	*(unsigned int *)pixel = color;
 }
 
-void	draw_map(t_data *fdf, int x, int y, int color)
+void	draw_map(t_data *fdf, int x, int y, int color, int z)
 {
-    set_pixel(fdf, x, y, color);
+	int calc_x;
+	int calc_y;
+
+	calc_x =(WIDTH) /(fdf->pixel + 1);
+	calc_y =y;
+	printf("calc_x: %d\n" ,calc_x);
+	printf("calc_y: %d\n", calc_y);
+	x = x + -cos(0.82359877) * y;
+	x = x * cos(0.323599);
+	// y = y + sin(0.52359877) * x;
+	y = y * sin(0.623599);
+	if (z |calc_x | calc_y){}
+	// color = fdf->map[calc_x][calc_y].color;
+    set_pixel(fdf, 230+x, 100+y, color);
 }

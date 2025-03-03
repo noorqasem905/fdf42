@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:35:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/02/27 21:49:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/03 01:16:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,10 @@ void	set_map(t_data *fdf, char *arg)
 			fdf->map[y][x].x = x;
 			fdf->map[y][x].y = y;
 			fdf->map[y][x].z = ft_atoi(split[x]);
+			if (fdf->map[y][x].z < 0)
+				fdf->map[y][x].color = 0x0000FF;
+			else
+				fdf->map[y][x].color = 0xFFFFFF;
 		}
 		frees_split(split);
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/02/27 22:52:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/01 17:24:40 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	close_d(int keycode, t_data *fdf)
 {
-	printf("Keycode pressed: %d\n", keycode);
+	// printf("Keycode pressed: %d\n", keycode);
 	if (keycode == ESC)
 	{
 		mlx_destroy_image(fdf->mlx_init, fdf->img);
