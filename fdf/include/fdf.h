@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/03 01:05:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/03 23:09:16 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 typedef struct s_node	t_map;
 typedef struct s_data	t_data;
-# define HEIGHT 540
-# define WIDTH 970
+# define HEIGHT 900
+# define WIDTH 1200
 # define ERO_NAME_FILE "Error : unsupported file"
 # define ERO_OPEN_FILE "Error : failed to open file"
 # define ERO_MAP "Error : map is invalid"

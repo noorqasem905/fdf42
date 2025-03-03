@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:37:13 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/03 02:00:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/03 23:12:15 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	sset_algo(t_data *fdf)
 	a->x = 0;
 	a->y = 0;
 	b->x = 0;
-	b->y = HEIGHT - 1;
+	b->y = HEIGHT - 10;
 	i = -1;
 	fdf->pixel = 0;
 	pixel = WIDTH / fdf->width;
@@ -138,7 +138,7 @@ int	sset_algo(t_data *fdf)
 		a->y = 0;
 		a->x += pixel;
 		b->x += pixel;
-		b->y = HEIGHT - 1;
+		b->y = HEIGHT -10;
 		fdf->pixel += pixel;
 	}
 	free(a);
