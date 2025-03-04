@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/03 23:09:16 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/04 23:37:27 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define FDF_H
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
+# include <unistd.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -51,6 +53,7 @@ struct					s_data
 	int					height;
 	int					width;
 	int					flag;
+	int					point;
 	t_map				**map;
 };
 struct					s_node
@@ -63,10 +66,9 @@ struct					s_node
 
 void					frees(t_data *root);
 void					set_pixel(t_data *fdf, int x, int y, int color);
-void					slope_less_then_one(int dx, int dy, t_map *a, t_map *b, t_data *fdf);
+void					slope_less_then_one(int dx, int dy, t_map *a, t_data *fdf);
 void					handle_error(char *_error);
-void					slope_greater_then_one(int dx, int dy, t_map *a,
-	t_map *b, t_data *fdf);
+void					slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf);
 	int						close_d(int keycode, t_data *fdf);
 	int						destroy_image(int keycode, t_data *fdf);
 void					check_name(char *arg, t_data *fdf);

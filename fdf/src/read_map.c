@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:35:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/03 01:16:51 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/05 00:23:07 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	frees(t_data *root)
 
 	i = -1;
 	cur2 = (*root).map;
-	while (++i < (*root).height)
+	while (++i < (*root).height && cur2[i])
 		free(cur2[i]);
-	free(cur2);
+	if (cur2)
+		free(cur2);
 }
 
 // void	frees_map(t_data ***root)
@@ -179,6 +180,13 @@ void	set_map(t_data *fdf, char *arg)
 
 	y = -1;
 	fdf->map = (t_map **)malloc(sizeof(t_map *) * fdf->height);
+	if (!fdf->map)
+	{
+		handle_error(ERO_MALLOC);
+		errno = ENOMEM;
+		fdf->flag = 12;
+		return ;
+	}
 	fd = open(arg, O_RDONLY);
 	if (fd == -1)
 	{
@@ -188,9 +196,19 @@ void	set_map(t_data *fdf, char *arg)
 	while (++y < fdf->height)
 	{
 		fdf->map[y] = (t_map *)malloc(sizeof(t_map) * fdf->width);
+		if (!fdf->map[y])
+		{
+			while (--y >= 0)
+				free(fdf->map[y]);
+			handle_error(ERO_MALLOC);
+			errno = ENOMEM;
+			close(fd);
+			fdf->flag = 12;
+			return ;
+		}
 		line = get_next_line(fd);
 		if (!line)
-			break ;
+			break;
 		split = ft_split(line, ' ');
 		if (!split)
 		{

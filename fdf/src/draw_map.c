@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:35:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/03 23:21:06 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/04 23:17:11 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,31 @@ void	set_pixel(t_data *fdf, int x, int y, int color)
 
 void	draw_map(t_data *fdf, int x, int y, int color, int z)
 {
-	int calc_x;
-	int calc_y;
 	int tmp;
-
-	calc_x =(WIDTH) /(fdf->pixel + 1);
-	calc_y =y;
-	printf("calc_x: %d\n" ,calc_x);
-	printf("calc_y: %d\n", calc_y);
-	// x = x + -cos(0.82359877) * y;
+	
+	// x *= fdf->zoom;
+	// y *= fdf->zoom;
+	z *= fdf->zoom;
+	// y *= 20;
+	if (z > 0)
+	{
+		color = 0x00FF00;
+	}
 	tmp = x;
-	x = (tmp - y) * cos(0.523599);
-	// x = x * cos(0.2);
-	// y = y + sin(0.52359877) * x;
-	y = (y) * sin(0.523599);
-	// y = (x + y) * sin(0.523599) - z;
-	if (z |calc_x | calc_y){}
-	// color = fdf->map[calc_x][calc_y].color;
-    set_pixel(fdf, 240+x, 100+y, color);
+	x = (tmp - y) * cos(0.4);
+	// y = (tmp + y) * sin(0.8) - z;
+	// printf("y: %f\n",(x + y) * sin(0.5) - z);
+	if (ft_abs(y * tan(0.3) + z) > 0){
+		
+		printf("y: %d\n", ft_abs(y * tan(0.3) + z));
+		y = ft_abs(y * tan(0.3) + z);
+		// y = ft_abs((tmp + y) * sin(0.8) - z);
+	}
+	else
+	{
+		printf("y: %d\n", ft_abs(y * tan(0.3) + z)+1);
+		y = (ft_abs(y * tan(0.3) + z)+1);
+		// y = ft_abs((tmp + y) * sin(0.4) - z) + 1;
+	}
+	set_pixel(fdf, x, y, color);
 }

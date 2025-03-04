@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/01 17:24:40 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/04 23:22:07 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ void	setup_win(t_data *fdf)
 {
 	fdf->mlx_init = mlx_init();
 	fdf->mlx_win = mlx_new_window(fdf->mlx_init, WIDTH, HEIGHT, "FDF");
+	fdf->zoom = WIDTH / fdf->width;
 	fdf->img = mlx_new_image(fdf->mlx_init, WIDTH, HEIGHT);
-    sset_algo(fdf);
+    if (sset_algo(fdf))
+	{
+		close_d(ESC, fdf);
+	}
 	mlx_put_image_to_window(fdf->mlx_init, fdf->mlx_win, fdf->img, 0, 0);
 	mlx_hook(fdf->mlx_win, 2, 1L << 0, close_d, fdf);
 	mlx_loop(fdf->mlx_init);
