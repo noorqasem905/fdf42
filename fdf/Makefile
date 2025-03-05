@@ -1,12 +1,13 @@
 CC =  cc
 # CFLAGS = -Wall -Werror -Wextra -g
 NAME = fdf
-SRCS = src/fdf.c \
-		src/read_map.c \
-		src/setup_window.c \
-		src/draw_map.c \
-		src/bresenham_algorithm.c \
-		src/draw_line.c
+SRCS = src/fdf.c 					\
+		src/read_map.c 				\
+		src/setup_window.c 			\
+		src/draw_map.c 				\
+		src/bresenham_algorithm.c 	\
+		src/draw_line.c 			\
+		src/utils.c
 
 all: $(NAME)
 
