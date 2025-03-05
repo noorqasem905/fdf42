@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:37:13 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/04 23:41:28 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:56:33 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ void	slope_less_then_one(int dx, int dy, t_map *a, t_data *fdf)
 
 	i = -1;
 	p = 2 * ft_abs(dy) - ft_abs(dx);
-	if (fdf->flag == 0)
-		pixel = (HEIGHT) / fdf->height;
-	else
-		pixel = (WIDTH) / fdf->width;
-	// printf("map[%d]: %d\n",i, (i)/pixel);
-	if (pixel == 0)
-		pixel = 1;
 	while (++i < ft_abs(dx))
 	{
 		if (dx > 0)
@@ -50,10 +43,6 @@ void	slope_less_then_one(int dx, int dy, t_map *a, t_data *fdf)
 				a->y--;
 			p += 2 * (ft_abs(dy) - ft_abs(dx));
 		}
-		if (fdf->flag == 5 && i/pixel < fdf->width)
-			a->z = fdf->map[fdf->point][i/pixel].z;
-		else if (fdf->flag == 0 && i/pixel < fdf->height)
-			a->z = fdf->map[i/pixel][fdf->point].z;
 		draw_map(fdf, a->x, a->y, a->color, a->z);
 	}
 }
@@ -63,12 +52,9 @@ void	slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf)
 	int	pixel;
 	int	p;
 	int	i;
+
 	i = -1;
 	p = 2 * ft_abs(dx) - ft_abs(dy);
-	if (fdf->flag == 0)
-		pixel = (HEIGHT) / fdf->height;
-	else
-		pixel = (WIDTH) / fdf->width;
 	while (++i < ft_abs(dy))
 	{
 		if (dy > 0)
@@ -86,88 +72,175 @@ void	slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf)
 			p += 2 * (ft_abs(dx) - ft_abs(dy));
 			a->x++;
 		}
-		if (fdf->flag == 5 && i/pixel < fdf->width)
-			a->z = fdf->map[fdf->point][i/pixel].z;
-		else if (fdf->flag == 0 && i/pixel < fdf->height)
-			a->z = fdf->map[i/pixel][fdf->point].z;
 		draw_map(fdf, a->x, a->y, a->color, a->z);
 	}
 }
 
-int	sset_algo(t_data *fdf)
+/*
+
+void	set_column(t_data *fdf, int pixel_x, int pixel_y, t_map *a)
 {
+	int		i;
+	int		j;
 	int		dx;
 	int		dy;
+	float	pixel;
+
+	i = -1;
+	pixel = 0;
+	fdf->flag = 0;
+	while (++i <= fdf->width)
+	{
+		j = -1;
+		fdf->pixel = 0;
+		while (++j < fdf->height)
+		{
+			a->color = 0xFFFFFF;
+			if (i != fdf->width)
+			{
+				a->z = fdf->map[j][i].z;
+				if (a->z > 0)
+					a->color = 0x0000FF;
+			}
+			a->x = pixel;
+			b->x = pixel;
+			a->y = fdf->pixel;
+			fdf->pixel += pixel_y;
+			b->y = fdf->pixel;
+			dx = b->x - a->x;
+			dy = b->y - a->y;
+			if (ft_abs(dy) < ft_abs(dx))
+				slope_less_then_one(dx, dy, a, fdf);
+			else
+				slope_greater_then_one(dx, dy, a, fdf);
+		}
+		pixel += pixel_x;
+	}
+}
+ */
+/*
+void	set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a, t_map *b)
+{
 	int		i;
-	int	pixel;
+	int		j;
+	int		dx;
+	int		dy;
+	float	pixel;
+
+	fdf->flag = 5;
+	i = -1;
+	pixel = 0;
+	while (++i <= fdf->height)
+	{
+		j = -1;
+		fdf->pixel = 0;
+		while (++j < fdf->width)
+		{
+			a->color = 0xFFFFFF;
+			if (i != fdf->height)
+			{
+				a->z = fdf->map[i][j].z;
+				if (a->z > 0)
+					a->color = 0x0000FF;
+			}
+			a->y = pixel;
+			b->y = pixel;
+			a->x = fdf->pixel;
+			fdf->pixel += pixel_x;
+			b->x = fdf->pixel;
+			dx = b->x - a->x;
+			dy = b->y - a->y;
+			if (ft_abs(dy) < ft_abs(dx))
+				slope_less_then_one(dx, dy, a, fdf);
+			else
+				slope_greater_then_one(dx, dy, a, fdf);
+		}
+		pixel += pixel_y;
+	}
+}
+ */
+/*
+
+int	sset_adlgo(t_data *fdf)
+{
+	int		i;
+	int		j;
+	int		dx;
+	int		dy;
+	float	pixel;
+	float	pixel_x;
+	float	pixel_y;
 	t_map	*a;
 	t_map	*b;
 
-	b = malloc(sizeof(t_map));
-	a = malloc(sizeof(t_map));	
-	if (!a || !b)
-	{
-		if (a)
-			free(a);
-		if (b)
-			free(b);
-		handle_error(ERO_MALLOC);
-		errno = ENOMEM;
-		fdf->flag = 1;
-		return (fdf->flag);
-	}
-	a->color = 0xFFFFFF;
-	b->color = 0xFFFFFF;
-	a->x = 0;
-	a->y = 0;
-	b->x = WIDTH;
-	b->y = 0;
 	i = -1;
-	fdf->pixel = 0;
-	pixel = (HEIGHT) / fdf->height;
-	fdf->flag = 5; 
+	pixel_x = WIDTH/fdf->width;
+	pixel_y = HEIGHT/fdf->height;
+	pixel = 0;
+	b = malloc(sizeof(t_map));
+	a = malloc(sizeof(t_map));
+	a->z = 0;
+	fdf->flag = 5;
 	while (++i <= fdf->height)
 	{
- 		dx = b->x - a->x;
-		dy = b->y - a->y;
-		fdf->pixel += pixel;
-		if (i != fdf->height)
+		j = -1;
+		fdf->pixel = 0;
+		while (++j < fdf->width)
+		{
+			a->color = 0xFFFFFF;
+			if (i != fdf->height)
+			{
+				a->z = fdf->map[i][j].z;
+				if (a->z > 0)
+					a->color = 0x0000FF;
+			}
 			fdf->point = i;
-		if (ft_abs(dy) < ft_abs(dx))
-			slope_less_then_one(dx, dy, a, fdf);
-		else
-			slope_greater_then_one(dx, dy, a, fdf);
-			
-		a->x = 0;
-		a->y += pixel;
-		b->y += pixel;
-		b->x = WIDTH;
+			a->y = pixel;
+			b->y = pixel;
+			a->x = fdf->pixel;
+			fdf->pixel += pixel_x;
+			b->x = fdf->pixel;
+			dx = b->x - a->x;
+			dy = b->y - a->y;
+			if (ft_abs(dy) < ft_abs(dx))
+				slope_less_then_one(dx, dy, a, fdf);
+			else
+				slope_greater_then_one(dx, dy, a, fdf);
+		}
+		pixel += pixel_y;
 	}
-	a->x = 0;
-	a->y = 0;
-	b->x = 0;
-	b->y = HEIGHT;
 	i = -1;
-	fdf->pixel = 0;
-	pixel = (WIDTH) / fdf->width;
-	fdf->flag = 0; 
+	pixel = 0;
+	fdf->flag = 0;
 	while (++i <= fdf->width)
 	{
-		dx = b->x - a->x;
-		dy = b->y - a->y;
-		if (i != fdf->width)
-			fdf->point = i;
-		if (ft_abs(dy) < ft_abs(dx))
-			slope_less_then_one(dx, dy, a, fdf);
-		else
-			slope_greater_then_one(dx, dy, a, fdf);
-		a->y = 0;
-		a->x += pixel;
-		b->x += pixel;
-		b->y = HEIGHT;
-		fdf->pixel += pixel;
+		j = -1;
+		fdf->pixel = 0;
+		while (++j < fdf->height)
+		{
+			a->color = 0xFFFFFF;
+			if (i != fdf->width)
+			{
+				a->z = fdf->map[j][i].z;
+				if (a->z > 0)
+					a->color = 0x0000FF;
+			}
+			a->x = pixel;
+			b->x = pixel;
+			a->y = fdf->pixel;
+			fdf->pixel += pixel_y;
+			b->y = fdf->pixel;
+			dx = b->x - a->x;
+			dy = b->y - a->y;
+			if (ft_abs(dy) < ft_abs(dx))
+				slope_less_then_one(dx, dy, a, fdf);
+			else
+				slope_greater_then_one(dx, dy, a, fdf);
+		}
+		pixel += pixel_x;
 	}
 	free(a);
 	free(b);
 	return (0);
 }
+*/

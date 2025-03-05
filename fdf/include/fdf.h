@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/04 23:37:27 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/05 16:38:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef struct s_node	t_map;
 typedef struct s_data	t_data;
-# define HEIGHT 900
+# define HEIGHT 1000
 # define WIDTH 1200
 # define ERO_NAME_FILE "Error : unsupported file"
 # define ERO_OPEN_FILE "Error : failed to open file"
@@ -49,7 +49,7 @@ struct					s_data
 	int					line_length;
 	int					endian;
 	int					zoom;
-	int					pixel;
+	float				pixel;
 	int					height;
 	int					width;
 	int					flag;
@@ -67,15 +67,20 @@ struct					s_node
 void					frees(t_data *root);
 void					set_pixel(t_data *fdf, int x, int y, int color);
 void					slope_less_then_one(int dx, int dy, t_map *a, t_data *fdf);
+void					setup_row(t_data *fdf, int pixel_x, float *pixel, int i, int j, t_map *a);
+void					setup_column(t_data *fdf, int pixel_y, float *pixel, int i, int j, t_map *a);
 void					handle_error(char *_error);
 void					slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf);
-	int						close_d(int keycode, t_data *fdf);
-	int						destroy_image(int keycode, t_data *fdf);
+void					set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a);
+void					set_column(t_data *fdf, int pixel_x, int pixel_y, t_map *a);
+int						close_d(int keycode, t_data *fdf);
+int						destroy_image(int keycode, t_data *fdf);
 void					check_name(char *arg, t_data *fdf);
 int						get_row_length(char *line, t_data *flag);
 int						sset_algo(t_data *fdf);
 int						q_get_dimensions(t_data *fdf, char *arg);
 int						setup_fdf(t_data *fdf, char *arg);
+int						close_by_cross(t_data *fdf);
 void					set_map(t_data *fdf, char *arg);
 void					draw_map(t_data *fdf, int x, int y, int color, int z);
 void					setup_win(t_data *fdf);

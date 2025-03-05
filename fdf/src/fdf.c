@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 21:44:18 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/04 23:50:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/05 13:05:46 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	main(int argc, char *argv[])
 	}
 	if (setup_fdf(&fdf, argv[1]))
 	{
-		handle_error(ERO_MALLOC);
+		if (fdf.flag == 12)
+			handle_error(ERO_MALLOC);
 		return (fdf.flag);
 	}
 	setup_win(&fdf);

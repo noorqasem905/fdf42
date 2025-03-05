@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:35:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/05 00:23:07 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/05 17:03:31 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,6 @@ void	handle_error(char *_error)
 	ft_putendl_fd(_error, 2);
 }
 
-void	get_line(t_data *fdf, char *arg)
-{
-	char	*line;
-	int		fd;
-
-	fd = open(arg, O_RDONLY);
-	if (fd == -1)
-	{
-		printf("Error\n");
-		return ;
-	}
-	line = get_next_line(fd);
-	fdf->height++;
-	while (line)
-	{
-		line = get_next_line(fd);
-		fdf->height++;
-	}
-	printf("%s\n", line);
-	free(line);
-	close(fd);
-}
-
 void	check_name(char *arg, t_data *fdf)
 {
 	int	i;
@@ -110,12 +87,13 @@ int	get_row_length(char *line, t_data *fdf)
 	while (line[i])
 	{
 		if (!ft_isdigit(line[i]) && (line[i] != ' ' && line[i] != '-'
-				&& line[i] != '+'))
+				&& line[i] != '+' && !line[i]))
 		{
 			fdf->flag = 4;
 			return (++i);
 		}
-		if (line[i] != ' ' && line[i] != '-' && line[i] != '+')
+		if (line[i] != ' ' && line[i] != '-' && line[i] != '+'
+			&& ft_isdigit(line[i]))
 		{
 			count++;
 			while (line[i + 1] != ' ' && line[i + 1])
@@ -208,7 +186,7 @@ void	set_map(t_data *fdf, char *arg)
 		}
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		split = ft_split(line, ' ');
 		if (!split)
 		{
