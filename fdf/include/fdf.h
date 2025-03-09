@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/05 17:31:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/08 16:00:03 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ typedef struct s_node	t_map;
 typedef struct s_data	t_data;
 # define HEIGHT 1000
 # define WIDTH 1200
+# define PI 3.14159
+# define cos_x cos(1.1)
+# define sin_y sin(0.5) 
+# define ESC 65307
+# define SPACE 32
 # define ERO_NAME_FILE "Error : unsupported file"
 # define ERO_OPEN_FILE "Error : failed to open file"
 # define ERO_MAP "Error : map is invalid"
@@ -37,23 +42,24 @@ typedef struct s_data	t_data;
 # define ERO_MLX_IMG "Error : mlx_new_image failed"
 # define ERO_MLX_ADDR "Error : mlx_get_data_addr failed"
 # define ERO_MLX_INIT "Error : mlx_init failed"
-# define ESC 65307
 
 struct					s_data
 {
-	void				*img;
+	float				pixel;
+	float				pixel_x;
+	float				pixel_y;
 	void				*mlx_init;
 	void				*mlx_win;
 	char				*addr;
+	void				*img;
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;
-	int					zoom;
-	float				pixel;
 	int					height;
 	int					width;
+	int					zoom;
 	int					flag;
-	int					point;
+	int					press;
 	t_map				**map;
 };
 struct					s_node
@@ -61,6 +67,8 @@ struct					s_node
 	int					x;
 	int					y;
 	int					z;
+	int					i;
+	int					j;
 	int					color;
 };
 
@@ -84,7 +92,7 @@ int						q_get_dimensions(t_data *fdf, char *arg);
 int						setup_fdf(t_data *fdf, char *arg);
 int						close_by_cross(t_data *fdf);
 void					set_map(t_data *fdf, char *arg);
-void					draw_map(t_data *fdf, int x, int y, int color, int z);
+void					draw_map(t_data *fdf, t_map *a);
 void					setup_win(t_data *fdf);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/05 17:02:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/07 03:16:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ int	close_d(int keycode, t_data *fdf)
 		free(fdf->mlx_init);
 		frees(fdf);
 		exit(0);
+	}
+	if (keycode == SPACE)
+	{
+		if (fdf->press == 1)
+			fdf->press = 0;
+		else
+			fdf->press = 1;
+		free(fdf->mlx_init);
 	}
 	return (0);
 }
@@ -40,7 +48,6 @@ void	setup_win(t_data *fdf)
 {
 	fdf->mlx_init = mlx_init();
 	fdf->mlx_win = mlx_new_window(fdf->mlx_init, WIDTH, HEIGHT, "FDF");
-	fdf->zoom = WIDTH / fdf->width;
 	fdf->img = mlx_new_image(fdf->mlx_init, WIDTH, HEIGHT);
 	if (sset_algo(fdf))
 		close_d(ESC, fdf);

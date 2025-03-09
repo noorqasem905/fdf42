@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/05 16:56:40 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/08 16:02:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a)
 		fdf->pixel = 0;
 		while (++j < fdf->width)
 		{
+			a->i = i;
+			a->j = j;
 			a->color = 0xFFFFFF;
 			setup_row(fdf, pixel_x, &pixel, i, j, a);
 		}
@@ -127,6 +129,8 @@ int	sset_algo(t_data *fdf)
 	pixel_y = HEIGHT / fdf->height;
 	a = malloc(sizeof(t_map));
 	a->z = 0;
+	fdf->pixel_x = pixel_x;
+	fdf->pixel_y = pixel_y;
 	set_row(fdf, pixel_x, pixel_y, a);
 	set_column(fdf, pixel_x, pixel_y, a);
 	free(a);
