@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:35:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/09 15:42:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:02:24 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,5 @@ int	setup_fdf(t_data *fdf, char *arg)
 		write(1, "Map is valid\n", 13);
 	set_map(fdf, arg);
 	// print_map(fdf);
-	printf("map[][]: %d\n", fdf->map[9][15].z);
 	return (fdf->flag);
 }

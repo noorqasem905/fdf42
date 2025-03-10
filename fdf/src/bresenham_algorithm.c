@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:37:13 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/06 16:29:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/10 23:50:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,20 @@ void	slope_less_then_one(int dx, int dy, t_map *a, t_data *fdf)
 				a->y--;
 			p += 2 * (ft_abs(dy) - ft_abs(dx));
 		}
-		draw_map(fdf, a);
+		if (fdf->flag == 712){
+			printf("(%d, %d)\n", a->x, a->y);
+			// draw_map(fdf, a);
+			// fdf->flag = 0;
+			// sleep(10);
+		}
+		else 
+		{
+			// draw_map(fdf, a)
+			/* code */
+			// fdf->flag = 0;
+
+			draw_map_utils(fdf, a);
+		}
 	}
 }
 
@@ -72,7 +85,18 @@ void	slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf)
 			p += 2 * (ft_abs(dx) - ft_abs(dy));
 			a->x++;
 		}
-		draw_map(fdf, a);
+		if (fdf->flag == 712){
+			printf("(%d, %d)\n", a->x, a->y);
+			// draw_map(fdf, a);
+			fdf->flag = 0;
+			// sleep(10);
+		}
+		else
+		{
+			/* code */
+			// fdf->flag = 0;
+			draw_map_utils(fdf, a);
+		}
 	}
 }
 

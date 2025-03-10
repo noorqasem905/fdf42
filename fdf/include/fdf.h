@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/08 16:00:03 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/10 23:17:26 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void					slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf);
 void					set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a);
 void					set_column(t_data *fdf, int pixel_x, int pixel_y, t_map *a);
 int						q_get_dimensions_handling(t_data *fdf, int *is_changed);
+int						slope(t_data *fdf, t_map *a, float x2, float y2);
 int						close_d(int keycode, t_data *fdf);
 int						destroy_image(int keycode, t_data *fdf);
 int						get_row_length(char *line, t_data *flag);
@@ -92,6 +93,7 @@ int						q_get_dimensions(t_data *fdf, char *arg);
 int						setup_fdf(t_data *fdf, char *arg);
 int						close_by_cross(t_data *fdf);
 void					set_map(t_data *fdf, char *arg);
+void					draw_map_utils(t_data *fdf, t_map *a);
 void					draw_map(t_data *fdf, t_map *a);
 void					setup_win(t_data *fdf);
 

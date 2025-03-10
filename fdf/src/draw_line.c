@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/08 16:02:00 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/10 23:32:28 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,24 @@ void	set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a)
 		}
 		pixel += pixel_y;
 	}
+}
+
+int	slope(t_data *fdf, t_map *a, float x2, float y2)
+{
+	int		x1;
+	int		y1;
+	int		dx;
+	int		dy;
+
+	x1 = a->x;
+	y1 = a->y;
+	fdf->flag = 712;
+	dx = x2 - x1;
+	dy = y2 - y1;
+	if (ft_abs(dy) < ft_abs(dx))
+		slope_less_then_one(dx, dy, a, fdf);
+	else
+		slope_greater_then_one(dx, dy, a, fdf);
 }
 
 int	sset_algo(t_data *fdf)

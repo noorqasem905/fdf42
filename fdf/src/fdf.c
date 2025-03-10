@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 21:44:18 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/08 18:26:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/10 16:03:42 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char *argv[])
 			handle_error(ERO_MALLOC);
 		return (fdf.flag);
 	}
-	// setup_win(&fdf);
+	setup_win(&fdf);
 	frees(&fdf);
 	free(fdf.mlx_init);
 }
