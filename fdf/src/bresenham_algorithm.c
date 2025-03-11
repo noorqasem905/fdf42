@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:37:13 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/11 14:15:26 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/12 00:51:42 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,65 @@ void	slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf)
 			// fdf->flag = 0;
 			draw_map_utils(fdf, a);
 		}
+	}
+}
+
+void	slope_less_then_one_test(int dx, int dy, t_map *a, t_data *fdf)
+{
+	int	pixel;
+	int	p;
+	int	i;
+
+	i = -1;
+	p = 2 * ft_abs(dy) - ft_abs(dx);
+	while (++i < ft_abs(dx))
+	{
+		if (dx > 0)
+			a->x++;
+		else
+			a->x--;
+		if (p < 0)
+			p += 2 * ft_abs(dy);
+		else
+		{
+			if (dy > 0)
+				a->y++;
+			else
+				a->y--;
+			p += (2 * (ft_abs(dy) - ft_abs(dx)))*-1;
+		}
+		// printf("(%d, %d)\n", a->x, a->y);
+		draw_map(fdf, a);
+	}
+}
+
+void	slope_greater_then_one_test(int dx, int dy, t_map *a, t_data *fdf)
+{
+	int	pixel;
+	int	p;
+	int	i;
+
+	i = -1;
+	p = 2 * ft_abs(dx) - ft_abs(dy);
+	while (++i < ft_abs(dy))
+	{
+		if (dy > 0)
+			a->y++;
+		else
+			a->y--;
+		if (p < 0)
+			p += 2 * ft_abs(dx);
+		else
+		{
+			if (dx > 0)
+				a->x++;
+			else
+				a->x--;
+			p += (2 * (ft_abs(dx) - ft_abs(dy)))*-1;
+			a->x++;
+		}
+		// printf("(%d, %d)\n", a->x, a->y);
+		draw_map(fdf, a);
 	}
 }
 

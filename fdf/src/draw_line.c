@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/11 17:50:52 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/12 00:47:34 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,9 +131,9 @@ int	slope(t_data *fdf, t_map *a, float x2, float y2)
 	dx = x2 - x1;
 	dy = y2 - y1;
 	if (ft_abs(dy) < ft_abs(dx))
-		slope_less_then_one(dx, dy, a, fdf);
+		slope_less_then_one_test(dx, dy, a, fdf);
 	else
-		slope_greater_then_one(dx, dy, a, fdf);
+		slope_greater_then_one_test(dx, dy, a, fdf);
 	return 0;
 }
 
