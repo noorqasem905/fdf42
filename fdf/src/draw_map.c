@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:35:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/13 17:21:03 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/14 02:19:34 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	draw_2d_line(t_data *fdf, t_map *a, float x, float y, float z, int tmp)
 			set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), a->color);
 			return (1);
 		}
-		else if (fdf->map[a->i - 1][a->j].z > 0 && fdf->map[a->i][a->j].z == 0)
+		// else if (fdf->map[a->i - 1][a->j].z > 0 && fdf->map[a->i][a->j].z == 0)
 		{
 			// a->color = 0x00FF00;
 			// z_next = fdf->map[a->i - 1][a->j].z;
@@ -96,6 +96,7 @@ void	draw_map_utils(t_data *fdf, t_map *a)
 	float	z_next;
 	float inc_z;
 	int counter;
+	float	test;
 	
 	x = a->x;
 	y = a->y;
@@ -121,8 +122,29 @@ void	draw_map_utils(t_data *fdf, t_map *a)
 		return ;
 	}
 	fdf->flag = 0;
-	if (x <= WIDTH || y <= HEIGHT || x >= 0 || y >= 0)
-		printf("(%f, %f)\n", x, y);
+	// if ( x > 0 && y > 0)
+	// {
+	// 	if (fdf->press == 0)
+	// 	{
+	// 		fdf->test = x;
+	// 	}
+	// 	else if(fdf->press == 10)
+	// 	{
+	// 		int j = x - fdf->test;
+	// 		if (j < 0)
+	// 			fdf->tr = 1;
+	// 		else
+	// 			fdf->tr = 0;
+
+	// 	}
+	// 	if (fdf->press == 300)
+	// 		fdf->press = 0;
+	// 	else
+	// 		fdf->press++;
+	// 	if (fdf->tr)
+	// 		return ;
+	// }
+	// printf("(%f, %f)\n", x, y);
 	set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), color);
 }
 

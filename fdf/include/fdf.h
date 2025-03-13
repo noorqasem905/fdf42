@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/13 15:20:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/14 02:08:50 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ struct					s_data
 	int					width;
 	int					zoom;
 	int					flag;
-	int					press;
+	float				press;
+	int					tr;
+	float				test;
 	t_map				**map;
 };
 struct					s_node

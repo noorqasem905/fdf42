@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/12 16:53:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/14 02:05:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	setup_column(t_data *fdf, int pixel_y, float *pixel, int i, int j,
 	b->y = fdf->pixel;
 	dx = b->x - a->x;
 	dy = b->y - a->y;
+	write(1, "--------------> i am not here\n", 30);
 	if (ft_abs(dy) < ft_abs(dx))
 		slope_less_then_one(dx, dy, a, fdf);
 	else
@@ -86,6 +87,7 @@ void	setup_row(t_data *fdf, int pixel_x, float *pixel, int i, int j,
 	b->x = fdf->pixel;
 	dx = b->x - a->x;
 	dy = b->y - a->y;
+	write(1, "-------------->i am here\n", 25);
 	if (ft_abs(dy) < ft_abs(dx))
 		slope_less_then_one(dx, dy, a, fdf);
 	else
@@ -148,6 +150,8 @@ int	sset_algo(t_data *fdf)
 	a = malloc(sizeof(t_map));
 	a->z = 0;
 	fdf->flag = 0;
+	fdf->press = 0;
+	fdf->tr = 0;
 	fdf->pixel_x = pixel_x;
 	fdf->pixel_y = pixel_y;
 	set_row(fdf, pixel_x, pixel_y, a);
