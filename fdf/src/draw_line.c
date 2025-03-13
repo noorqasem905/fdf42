@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/12 00:47:34 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/12 16:53:31 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a)
 	int		dx;
 	int		dy;
 
-	fdf->flag = 5;
+	fdf->flag = 0;
 	i = -1;
 	pixel = 0;
 	while (++i <= fdf->height)
