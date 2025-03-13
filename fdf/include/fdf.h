@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/11 23:26:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/13 15:20:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data	t_data;
 # define sin_y sin(0.5) 
 # define ESC 65307
 # define SPACE 32
+# define zooming 10;
 # define ERO_NAME_FILE "Error : unsupported file"
 # define ERO_OPEN_FILE "Error : failed to open file"
 # define ERO_MAP "Error : map is invalid"
@@ -85,6 +86,7 @@ void					handle_error(char *_error);
 void					slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf);
 void					set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a);
 void					set_column(t_data *fdf, int pixel_x, int pixel_y, t_map *a);
+int						draw_2d_line(t_data *fdf, t_map *a, float x, float y, float z, int tmp);
 int						q_get_dimensions_handling(t_data *fdf, int *is_changed);
 int						slope(t_data *fdf, t_map *a, float x2, float y2);
 int						close_d(int keycode, t_data *fdf);

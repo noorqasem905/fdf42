@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:35:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/12 18:48:22 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/13 17:21:03 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,76 @@ void	set_pixel(t_data *fdf, int x, int y, int color)
 	*(unsigned int *)pixel = color;
 }
 
+int	draw_2d_line(t_data *fdf, t_map *a, float x, float y, float z, int tmp)
+{
+	float 	inc_z;
+	float	z_next;
+	float	center_x;
+	float	center_y;
+	int 	counter;
+
+	center_x = cos(PI / 6) * (WIDTH / 2);
+	center_y = sin(PI / 6) * (HEIGHT / 2);
+	if (a->i+1 < fdf->height && (a->j + 1) < fdf->width && (a->j) > 0 && a->i > 0)
+	{
+		if (fdf->map[a->i][a->j+1].z > 0 && fdf->map[a->i][a->j].z == 0)
+		{
+			z_next = fdf->map[a->i][a->j+1].z;
+			a->color = 0x00FF00;
+			inc_z = (10 * z_next)/fdf->pixel_x;
+			fdf->flag += 1;
+			counter = -1;
+			while (++counter <= fdf->flag)
+				z += inc_z;
+			y = (tmp + y) * sin(PI / 6) - z;
+			set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), a->color);
+			return (1);
+		}
+		else if (fdf->map[a->i][a->j+1].z == 0 && fdf->map[a->i][a->j].z > 0)
+		{
+			a->color = 0x00FF00;
+			inc_z = (z)/fdf->pixel_x;
+			fdf->flag += 1;
+			counter = -1;
+			while (++counter <= fdf->flag)
+				z -= inc_z;
+			y = (tmp + y) * sin(PI / 6) - z;
+			set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), a->color);
+			return (1);
+		}
+		else if (fdf->map[a->i - 1][a->j].z > 0 && fdf->map[a->i][a->j].z == 0)
+		{
+			// a->color = 0x00FF00;
+			// z_next = fdf->map[a->i - 1][a->j].z;
+			// inc_z = (z_next * 10)/fdf->pixel_x;
+			// fdf->flag += 1;
+			// counter = -1;
+			// while (++counter <= fdf->flag)
+			// 	z += inc_z;
+			// // x =x - z;
+			// y = (tmp + y) * sin(PI / 6) - z;
+			// set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), a->color);
+			// return (1);
+		}
+	}
+	return (0);
+}
+
 void	draw_map_utils(t_data *fdf, t_map *a)
 {
-	t_map	*b;
 	int		tmp;
-	int		x;
-	float		y;
+	float		x;
+	float	y;
 	float	z;
 	int		i;
 	int		j;
 	int		color;
+	float	center_x;
+	float	center_y;
 	float	pixel_x;
 	float	pixel_y;
-	float	start_x;
-	float	start_y;
-	float	end_x;
-	float	end_y;
 	int		flag;
+	float	z_next;
 	float inc_z;
 	int counter;
 	
@@ -49,67 +102,46 @@ void	draw_map_utils(t_data *fdf, t_map *a)
 	z = a->z;
 	i = a->i;
 	j = a->j;
-	z *= 10;
 	color = a->color;
+	pixel_x = fdf->pixel_x;
+	pixel_y = fdf->pixel_y;
+	z *= 10;
 	tmp = x;
 	x = (tmp - y) * cos(PI / 6);
-	pixel_x = cos(PI / 6) * (WIDTH / 2);
-	pixel_y = sin(PI / 6) * (HEIGHT / 2);
-	b = malloc(sizeof(t_map));
-	// x *= 2;
-	// y *= 2; 
-	if (i < fdf->height && (j + 1) < fdf->width && (j) > 0)
-	{
-		if (fdf->map[i][j+1].z > 0 && fdf->map[i][j].z == 0)
-		{
-			int fd;
-			color = 0x00FF00;
-			inc_z = 100.0/160.0;
-			fdf->flag += 1;
-			fd = fdf->flag;
-			counter = -1;
-			while (++counter < fd)
-			{
-				z += inc_z;
-				printf("ddd:%f\n", z);
-			}
-			y = (tmp + y) * sin(PI / 6) - z;
-
-			set_pixel(fdf, (x * cos_x) + pixel_x, (y * sin_y + pixel_y), color);
-			return ;
-			// printf("z: %f\n", z);
-			// printf("z: %f \n", z);
-		}
-	}
+	center_x = cos(PI / 6) * (WIDTH / 2);
+	center_y = sin(PI / 6) * (HEIGHT / 2);
+	if (draw_2d_line(fdf, a, x, y, z, tmp))
+		return ;
 	y = (tmp + y) * sin(PI / 6) - z;
-
-	free(b);
-	set_pixel(fdf, (x * cos_x) + pixel_x, (y * sin_y + pixel_y), color);
+	if (fdf->flag && fdf->map[i][j].z > 0)
+	{
+		color = 0x00FFFF;
+		set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), color);	
+		fdf->flag = 0;
+		return ;
+	}
+	fdf->flag = 0;
+	if (x <= WIDTH || y <= HEIGHT || x >= 0 || y >= 0)
+		printf("(%f, %f)\n", x, y);
+	set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), color);
 }
 
 void	draw_map(t_data *fdf, t_map *a)
 {
-	int	tmp;
 	int x;
 	int y;
 	int z;
 	int color;
 	float pixel_x;
 	float pixel_y;
+
 	x = a->x;
 	y = a->y;
 	z = a->z;
 	color = a->color;
-	// z *= 15;
-	color = 0xFFFF00;
-	// tmp = x;
-	// x = (x * tan(0.2)) + 0;
-	// y *= tan(0.8); 
 	pixel_x = cos(PI / 6) * (WIDTH / 2);
 	pixel_y = sin(PI / 6) * (HEIGHT / 2);
-	// y += 10;
 	set_pixel(fdf, (x * cos_x) + pixel_x, ((y * sin_y) + pixel_y), color);
-	// set_pixel(fdf, x + pixel_x , y + pixel_y, color);
 }
 
 /*
@@ -183,5 +215,4 @@ void	draw_map_utils(t_data *fdf, t_map *a)
 	free(b);
 	set_pixel(fdf, (x * cos_x) + pixel_x, (y * sin_y + pixel_y), color);
 }
-
 */
