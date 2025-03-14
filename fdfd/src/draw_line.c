@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/14 02:36:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/14 05:15:39 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,30 @@ void	setup_column(t_data *fdf, int pixel_y, float *pixel, int i, int j,
 	free(b);
 }
 
-void	set_column(t_data *fdf, int pixel_x, int pixel_y, t_map *a)
+void	set_column(t_data *fdf, t_map *a)
 {
 	int		i;
 	int		j;
-	int		dx;
-	int		dy;
-	float	pixel;
+	float pixel_x;
+	float pixel_y;
+	int l=60;
+	t_map	**map;
 
 	i = -1;
-	pixel = 0;
 	fdf->flag = 0;
-	while (++i <= fdf->width)
+	map = fdf->map;
+	while (++i < fdf->height)
 	{
 		j = -1;
-		fdf->pixel = 0;
-		while (++j < fdf->height)
+		while (++j < fdf->width)
 		{
-			a->color = 0xFFFFFF;
-			setup_column(fdf, pixel_y, &pixel, i, j, a);
+			a->color = 0xFFFF00;
+			pixel_x = cos(PI / 6) * (WIDTH / 2);
+			pixel_y = sin(PI / 6) * (HEIGHT / 2);
+			set_pixel(fdf, (map[i][j].x * 70) + pixel_x, ((map[i][j].y*l) + pixel_y), a->color);
+			printf("(%d, %d)\n", i, j);
 		}
-		pixel += pixel_x;
+		l +=10;
 	}
 }
 
@@ -95,29 +98,26 @@ void	setup_row(t_data *fdf, int pixel_x, float *pixel, int i, int j,
 	free(b);
 }
 
-void	set_row(t_data *fdf, int pixel_x, int pixel_y, t_map *a)
+void	set_row(t_data *fdf, t_map *a)
 {
-	float	pixel;
 	int		i;
 	int		j;
-	int		dx;
-	int		dy;
+	float pixel_x;
+	float pixel_y;
+	t_map	**map;
 
 	fdf->flag = 0;
 	i = -1;
-	pixel = 0;
-	while (++i <= fdf->height)
+ 	while (++i < fdf->height)
 	{
 		j = -1;
-		fdf->pixel = 0;
 		while (++j < fdf->width)
 		{
-			a->i = i;
-			a->j = j;
-			a->color = 0xFFFFFF;
-			setup_row(fdf, pixel_x, &pixel, i, j, a);
+			a->color = 0xFFFF00;
+			pixel_x = cos(PI / 6) * (WIDTH / 2);
+			pixel_y = sin(PI / 6) * (HEIGHT / 2);
+			set_pixel(fdf, (map[i][j].x * 15) + pixel_x, ((map[i][j].y*15) + pixel_y), a->color);
 		}
-		pixel += pixel_y;
 	}
 }
 
@@ -139,6 +139,37 @@ int	slope(t_data *fdf, t_map *a, float x2, float y2)
 	return 0;
 }
 
+
+void	set_isometric(t_data *fdf)
+{
+	float	x;
+	float	y;
+	float	z;
+	int color;
+	float pixel_x;
+	float pixel_y;
+	int		i;
+	int		j;
+	t_map	**map;
+	int		tmp;
+
+	fdf->flag = 0;
+	map = fdf->map;
+	i = -1;
+	while (++i < fdf->height)
+	{
+		j = -1;
+		while (++j < fdf->width)
+		{
+			color = 0xFFFF00;
+			tmp = map[i][j].x;
+			map[i][j].x = (tmp - y) * cos(PI / 6);
+			map[i][j].y = (tmp + y) * sin(PI / 6) - map[i][j].z;
+		}
+	}
+}
+
+
 int	sset_algo(t_data *fdf)
 {
 	float	pixel_x;
@@ -154,8 +185,9 @@ int	sset_algo(t_data *fdf)
 	fdf->tr = 0;
 	fdf->pixel_x = pixel_x;
 	fdf->pixel_y = pixel_y;
-	set_row(fdf, pixel_x, pixel_y, a);
-	set_column(fdf, pixel_x, pixel_y, a);
+	set_isometric(fdf);
+	set_column(fdf, a);
+	// set_row(fdf, a);
 	free(a);
 	return (0);
 }
