@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 19:37:13 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/14 04:36:10 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/15 18:16:37 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	slope_less_then_one_test(int dx, int dy, t_map *a, t_data *fdf)
 				a->y++;
 			else
 				a->y--;
-			p += (2 * (ft_abs(dy) - ft_abs(dx)))*-1;
+			p += (2 * (ft_abs(dy) - ft_abs(dx)));
 		}
 		draw_map(fdf, a);
 	}
@@ -126,7 +126,7 @@ void	slope_greater_then_one_test(int dx, int dy, t_map *a, t_data *fdf)
 				a->x++;
 			else
 				a->x--;
-			p += (2 * (ft_abs(dx) - ft_abs(dy)))*-1;
+			p += (2 * (ft_abs(dx) - ft_abs(dy)));
 			a->x++;
 		}
 		draw_map(fdf, a);

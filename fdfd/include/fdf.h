@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/14 05:03:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/15 14:30:05 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void					slope_less_then_one(int dx, int dy, t_map *a, t_data *fdf);
 void					slope_less_then_one_test(int dx, int dy, t_map *a, t_data *fdf);
 void					slope_greater_then_one_test(int dx, int dy, t_map *a, t_data *fdf);
 void					setup_row(t_data *fdf, int pixel_x, float *pixel, int i, int j, t_map *a);
-void					setup_column(t_data *fdf, int pixel_y, float *pixel, int i, int j, t_map *a);
+void					setup_column(t_data *fdf, float pixel_y, float pixel, int i, int j, t_map *a);
 void					handle_error(char *_error);
 void					slope_greater_then_one(int dx, int dy, t_map *a, t_data *fdf);
 void					set_row(t_data *fdf, t_map *a);
