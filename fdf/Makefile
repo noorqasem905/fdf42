@@ -7,7 +7,8 @@ SRCS = src/fdf.c 					\
 		src/draw_map.c 				\
 		src/bresenham_algorithm.c 	\
 		src/draw_line.c 			\
-		src/utils.c
+		src/utils.c					\
+		src/fdf_handling.c
 
 all: $(NAME)
 

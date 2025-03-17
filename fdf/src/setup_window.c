@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/16 18:47:54 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/17 01:12:04 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,7 @@ void	setup_win(t_data *fdf)
 	if (sset_algo(fdf))
 		close_d(ESC, fdf);
 	mlx_put_image_to_window(fdf->mlx_init, fdf->mlx_win, fdf->img, 0, 0);
-	// mlx_hook(fdf->mlx_win, 17, 0, close_by_cross, fdf);
+	mlx_hook(fdf->mlx_win, 17, 0, close_by_cross, fdf);
 	mlx_hook(fdf->mlx_win, 2, 1L << 0, close_d, fdf);
 	mlx_loop(fdf->mlx_init);
 }
-// set_pixel(fdf, 100, 100, 0xFF0000);
-// set_pixel(fdf, 200, 200, 0xFF0000);
-// set_pixel(fdf, 300, 300, 0xFF0000);
-// set_pixel(fdf, 400, 400, 0xFF0000);

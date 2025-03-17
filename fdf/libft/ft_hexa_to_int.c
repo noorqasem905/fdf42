@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_hexa_to_int.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 21:13:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 15:59:00 by nqasem           ###   ########.fr       */
+/*   Created: 2025/03/17 16:00:50 by nqasem            #+#    #+#             */
+/*   Updated: 2025/03/17 16:01:35 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_abs(int __x)
+int	hexa_to_int(char *s)
 {
-	if (__x < 0)
-		return (__x * -1);
-	return (__x);
+	int	hexa;
+	int	size;
+	int	base;
+	int	i;
+
+	i = 0;
+	hexa = 0;
+	base = 16;
+	size = ft_strlen(s);
+	while (i < size)
+	{
+		hexa += ft_power(base, (size - 1) - i) * ft_atoi_hexa(s[i]);
+		i++;
+	}
+	return (hexa);
 }

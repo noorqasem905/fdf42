@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 21:13:12 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 15:59:00 by nqasem           ###   ########.fr       */
+/*   Created: 2025/03/17 15:55:01 by nqasem            #+#    #+#             */
+/*   Updated: 2025/03/17 15:55:30 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_abs(int __x)
+int	ft_power(int num, int power)
 {
-	if (__x < 0)
-		return (__x * -1);
-	return (__x);
+	int	i;
+
+	i = num;
+	if (!power)
+		return (1);
+	while (--power)
+		num *= i;
+	return (num);
 }

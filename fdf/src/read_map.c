@@ -6,110 +6,90 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:35:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/10 16:02:24 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/17 17:21:08 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	check_name(char *arg, t_data *fdf)
+void	set_color(char	*split, t_data *fdf, int y, int x)
 {
-	int	i;
+	int		i;
+	char	*hexa;
 
 	i = 0;
-	if (access(arg, F_OK | R_OK) == -1)
+	while (split[i])
 	{
-		fdf->flag = 15;
-		handle_error(ERO_FILE);
-		return ;
-	}
-	while (arg[i])
-		i++;
-	if (arg[i - 1] != 'f' || arg[i - 2] != 'd' || arg[i - 3] != 'f'
-		|| arg[i - 4] != '.')
-	{
-		fdf->flag = 1;
-		handle_error(ERO_NAME_FILE);
-		return ;
-	}
-}
-
-int	get_row_length(char *line, t_data *fdf)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (line[i])
-	{
-		if (!ft_isdigit(line[i]) && (line[i] != ' ' && line[i] != '-'
-				&& line[i] != '+' && !line[i]))
+		if (split[i] == ',')
 		{
-			fdf->flag = 4;
-			return (++i);
+			i++;
+			if (split[i] == '0' && (split[i + 1] == 'x' || split[i + 1] == 'X'))
+			{
+				i += 2;
+				hexa = ft_strdup(&split[i]);
+				fdf->map[y][x].color = hexa_to_int(hexa);
+				free(hexa);
+				break;
+			}
 		}
-		if (line[i] != ' ' && line[i] != '-' && line[i] != '+'
-			&& ft_isdigit(line[i]))
-		{
-			count++;
-			while (line[i + 1] != ' ' && line[i + 1])
-				i++;
-		}
+		else
+			fdf->map[y][x].color = 0xFFFFFF;
 		i++;
 	}
-	return (count);
 }
 
-int	q_get_dimensions_handling(t_data *fdf, int *is_changed)
-{
-	if ((*is_changed) != (fdf)->width && (fdf)->height != 0)
-	{
-		fdf->flag = 1;
-		handle_error(ERO_MAP);
-		return (fdf->flag);
-	}
-	(*is_changed) = (fdf)->width;
-	if (fdf->flag)
-	{
-		handle_error(ERO_MAP);
-		write(2, "At line: ", 9);
-		ft_putnbr_fd((fdf)->height, 2);
-		write(2, "\nAt column: ", 13);
-		ft_putnbr_fd((fdf)->width, 2);
-		fdf->flag = 9;
-		return (fdf->flag);
-	}
-	return (0);
-}
-
-int	q_get_dimensions(t_data *fdf, char *arg)
+int	setup_set_map(t_data *fdf, int fd, int y)
 {
 	char	*line;
-	int		is_changed;
-	int		fd;
+	char	**split;
+	int		x;
 
-	is_changed = 0;
-	fd = open(arg, O_RDONLY);
-	if (fd == -1)
-	{
-		handle_error(ERO_OPEN_FILE);
-		fdf->flag = 9;
-		return (9);
-	}
 	line = get_next_line(fd);
-	while (line)
+	if (!line)
+		return (1);
+	split = ft_split(line, ' ');
+	if (!split)
 	{
-		(fdf)->width = get_row_length(line, fdf);
-		if (q_get_dimensions_handling(fdf, &is_changed))
-			return (fdf->flag);
 		free(line);
-		line = get_next_line(fd);
-		(fdf)->height++;
+		return (1);
 	}
+	x = -1;
+	while (++x < fdf->width)
+	{
+		fdf->map[y][x].x = x;
+		fdf->map[y][x].y = y;
+		fdf->map[y][x].z = ft_atoi(split[x]);
+		set_color(split[x], fdf, y, x);
+	}
+	frees_split(split);
 	free(line);
-	close(fd);
 	return (0);
+}
+
+void	set_map_utils(t_data *fdf, int fd)
+{
+	int		x;
+	int		y;
+	char	*line;
+	char	**split;
+
+	y = -1;
+	while (++y < fdf->height)
+	{
+		fdf->map[y] = (t_map *)malloc(sizeof(t_map) * fdf->width);
+		if (!fdf->map[y])
+		{
+			while (--y >= 0)
+				free(fdf->map[y]);
+			handle_error(ERO_MALLOC);
+			errno = ENOMEM;
+			close(fd);
+			fdf->flag = 12;
+			return ;
+		}
+		if (setup_set_map(fdf, fd, y))
+			break ;
+	}
 }
 
 void	set_map(t_data *fdf, char *arg)
@@ -117,10 +97,7 @@ void	set_map(t_data *fdf, char *arg)
 	int		x;
 	int		y;
 	int		fd;
-	char	*line;
-	char	**split;
 
-	y = -1;
 	fdf->map = (t_map **)malloc(sizeof(t_map *) * fdf->height);
 	if (!fdf->map)
 	{
@@ -135,42 +112,9 @@ void	set_map(t_data *fdf, char *arg)
 		handle_error(ERO_OPEN_FILE);
 		return ;
 	}
-	while (++y < fdf->height)
-	{
-		fdf->map[y] = (t_map *)malloc(sizeof(t_map) * fdf->width);
-		if (!fdf->map[y])
-		{
-			while (--y >= 0)
-				free(fdf->map[y]);
-			handle_error(ERO_MALLOC);
-			errno = ENOMEM;
-			close(fd);
-			fdf->flag = 12;
-			return ;
-		}
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		split = ft_split(line, ' ');
-		if (!split)
-		{
-			free(line);
-			break ;
-		}
-		x = -1;
-		while (++x < fdf->width)
-		{
-			fdf->map[y][x].x = x;
-			fdf->map[y][x].y = y;
-			fdf->map[y][x].z = ft_atoi(split[x]);
-			if (fdf->map[y][x].z < 0)
-				fdf->map[y][x].color = 0x0000FF;
-			else
-				fdf->map[y][x].color = 0xFFFFFF;
-		}
-		frees_split(split);
-		free(line);
-	}
+	set_map_utils(fdf, fd);
+	if (fdf->flag)
+		return ;
 	close(fd);
 }
 
@@ -194,6 +138,5 @@ int	setup_fdf(t_data *fdf, char *arg)
 	if (!(fdf->flag))
 		write(1, "Map is valid\n", 13);
 	set_map(fdf, arg);
-	// print_map(fdf);
 	return (fdf->flag);
 }
