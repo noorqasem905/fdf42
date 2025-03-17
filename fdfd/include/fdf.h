@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/15 14:30:05 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/17 02:21:38 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ void					set_map(t_data *fdf, char *arg);
 void					draw_map_utils(t_data *fdf, t_map *a);
 void					draw_map(t_data *fdf, t_map *a);
 void					setup_win(t_data *fdf);
+float calculate_scaling_factor(t_data *fdf);
 
 #endif

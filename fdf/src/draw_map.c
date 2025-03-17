@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:35:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/14 02:19:34 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/17 01:20:22 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void	draw_map_utils(t_data *fdf, t_map *a)
 	pixel_y = fdf->pixel_y;
 	z *= 10;
 	tmp = x;
-	x = (tmp - y) * cos(PI / 6);
+	// x = (tmp - y) * cos(PI / 6);
+	
 	center_x = cos(PI / 6) * (WIDTH / 2);
 	center_y = sin(PI / 6) * (HEIGHT / 2);
 	if (draw_2d_line(fdf, a, x, y, z, tmp))
@@ -122,28 +123,27 @@ void	draw_map_utils(t_data *fdf, t_map *a)
 		return ;
 	}
 	fdf->flag = 0;
-	// if ( x > 0 && y > 0)
-	// {
-	// 	if (fdf->press == 0)
-	// 	{
-	// 		fdf->test = x;
-	// 	}
-	// 	else if(fdf->press == 10)
-	// 	{
-	// 		int j = x - fdf->test;
-	// 		if (j < 0)
-	// 			fdf->tr = 1;
-	// 		else
-	// 			fdf->tr = 0;
-
-	// 	}
-	// 	if (fdf->press == 300)
-	// 		fdf->press = 0;
-	// 	else
-	// 		fdf->press++;
-	// 	if (fdf->tr)
-	// 		return ;
-	// }
+	if ( x > 0 && y > 0)
+	{
+		if (fdf->press == 0)
+		{
+			fdf->test = x;
+		}
+		else if(fdf->press == 10)
+		{
+			int j = x - fdf->test;
+			if (j < 0)
+				fdf->tr = 1;
+			else
+				fdf->tr = 0;
+		}
+		if (fdf->press == 300)
+			fdf->press = 0;
+		else
+			fdf->press++;
+		if (fdf->tr)
+			return ;
+	}
 	// printf("(%f, %f)\n", x, y);
 	set_pixel(fdf, (x * cos_x) + center_x, (y * sin_y + center_y), color);
 }

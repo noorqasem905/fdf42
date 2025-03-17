@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/14 02:36:31 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/17 01:20:10 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	setup_column(t_data *fdf, int pixel_y, float *pixel, int i, int j,
 	t_map	*b;
 	int		dx;
 	int		dy;
+	int tmp;
 
 	b = malloc(sizeof(t_map));
 	a->color = 0xFFFFFF;
@@ -34,7 +35,6 @@ void	setup_column(t_data *fdf, int pixel_y, float *pixel, int i, int j,
 	b->y = fdf->pixel;
 	dx = b->x - a->x;
 	dy = b->y - a->y;
-	write(1, "--------------> i am not here\n", 30);
 	if (ft_abs(dy) < ft_abs(dx))
 		slope_less_then_one(dx, dy, a, fdf);
 	else
@@ -72,11 +72,13 @@ void	setup_row(t_data *fdf, int pixel_x, float *pixel, int i, int j,
 	t_map	*b;
 	int		dx;
 	int		dy;
+	int		tmp;
 
 	b = malloc(sizeof(t_map));
 	if (i != fdf->height)
 	{
 		a->z = fdf->map[i][j].z;
+		b->z = fdf->map[i][j + 1].z;
 		if (a->z > 0)
 			a->color = 0x0000FF;
 	}
@@ -87,7 +89,7 @@ void	setup_row(t_data *fdf, int pixel_x, float *pixel, int i, int j,
 	b->x = fdf->pixel;
 	dx = b->x - a->x;
 	dy = b->y - a->y;
-	write(1, "-------------->i am here\n", 25);
+	// write(1, "-------------->i am here\n", 25);
 	if (ft_abs(dy) < ft_abs(dx))
 		slope_less_then_one(dx, dy, a, fdf);
 	else
