@@ -6,14 +6,57 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 01:12:04 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/18 18:21:52 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
+int	control(int key, t_data *fdf)
+{
+	if (key == ESC)
+	{
+		mlx_destroy_image(fdf->mlx_init, fdf->img);
+		mlx_destroy_window(fdf->mlx_init, fdf->mlx_win);
+		mlx_destroy_display(fdf->mlx_init);
+		free(fdf->mlx_init);
+		frees(fdf);
+		exit(0);
+	}
+	else if(key == UP)
+	{
+		fdf->control->y -= 50;
+	}
+	else if(key == DOWN)
+	{
+		fdf->control->y += 50;
+	}
+	else if(key == RIGHT)
+	{
+		fdf->control->x += 50;
+	}
+	else if(key == LEFT)
+	{
+		fdf->control->x -= 50;
+	}
+	else if(key == ZOOM_IN)
+	{
+		fdf->control->zoom += 10;
+	}
+	else if(key == ZOOM_OUT)
+	{
+		fdf->control->zoom -= 10;
+	}
+	else if(key == SPACE)
+	{
+		fdf->control->graph_rm = 1;
+	}
+	return (0);
+}
+
 int	close_d(int keycode, t_data *fdf)
 {
+	printf("Key: %d\n", keycode);
 	if (keycode == ESC)
 	{
 		mlx_destroy_image(fdf->mlx_init, fdf->img);
@@ -22,6 +65,30 @@ int	close_d(int keycode, t_data *fdf)
 		free(fdf->mlx_init);
 		frees(fdf);
 		exit(0);
+	}
+	else if(keycode == UP)
+	{
+		fdf->tr += 10;
+	}
+	else if(keycode == DOWN)
+	{
+		fdf->tr -= 10;
+	}
+	else if(keycode == RIGHT)
+	{
+		fdf->tr += 10;
+	}
+	else if(keycode == LEFT)
+	{
+		fdf->tr -= 10;
+	}
+	else if(keycode == SPACE)
+	{
+		fdf->tr = 0;
+	}
+	else
+	{
+
 	}
 	return (0);
 }

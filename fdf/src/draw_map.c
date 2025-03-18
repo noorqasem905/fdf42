@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:35:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 18:14:39 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/18 18:18:19 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void	draw_map(t_data *fdf, t_map *a)
 	center_x = cos(PI / 6) * (WIDTH / 2);
 	center_y = sin(PI / 6) * (HEIGHT / 2);
 	set_pixel(fdf, (x * cos(COS_X)) + (center_x), ((y * sin(SIN_Y))
-			+ (center_y)), color);
+			+ ((center_y*2))), color);
 }

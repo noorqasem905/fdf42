@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 17:07:16 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/18 18:22:14 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_node	t_map;
-typedef struct s_data	t_data;
+typedef struct s_node		t_map;
+typedef struct s_data		t_data;
+typedef struct s_control	t_control;
 # define HEIGHT 1000
 # define WIDTH 1200
 # define PI 3.14159
@@ -30,6 +31,12 @@ typedef struct s_data	t_data;
 # define SIN_Y 0.5
 # define ESC 65307
 # define SPACE 32
+# define UP 65362
+# define DOWN 65364
+# define RIGHT 65363
+# define LEFT 65361
+# define ZOOM_IN 65451
+# define ZOOM_OUT 65453
 # define ERO_NAME_FILE "Error : unsupported file"
 # define ERO_OPEN_FILE "Error : failed to open file"
 # define ERO_MAP "Error : map is invalid"
@@ -62,6 +69,7 @@ struct					s_data
 	float				press;
 	int					tr;
 	float				test;
+	t_control			*control;
 	t_map				**map;
 };
 struct					s_node
@@ -72,6 +80,14 @@ struct					s_node
 	int					i;
 	int					j;
 	int					color;
+};
+struct					s_control
+{
+	int					x;
+	int					y;
+	int					z;
+	int					zoom;
+	int					graph_rm;
 };
 void					slope_greater_then_one(int dx, int dy, t_map *a,
 							t_data *fdf);

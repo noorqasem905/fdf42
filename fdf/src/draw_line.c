@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 18:11:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/18 16:13:41 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	set_isometric(t_data *fdf)
 	fdf->flag = 0;
 	map = fdf->map;
 	if (fdf->pixel_x > fdf->pixel_y)
-		fdf->pixel = fdf->pixel_y;
+		fdf->pixel = fdf->pixel_y*0.5;
 	else
-		fdf->pixel = fdf->pixel_x;
+		fdf->pixel = fdf->pixel_y*0.5;
 	i = -1;
 	while (++i < fdf->height)
 	{
@@ -77,12 +77,10 @@ void	set_column(t_data *fdf, t_map *a)
 			a->color = map[i][j].color;
 			a->y = map[i][j].y;
 			a->x = map[i][j].x;
+			a->i = i;
+			a->j = j;
 			if (j + 1 < fdf->width)
-			{
-				// k = fdf->pixel_x/ft_abs(map[i][j].color - map[i][j + 1].color)/fdf->pixel_x;
-				// a->i = k;
 				slope(fdf, a, ((map[i][j + 1].x)), (map[i][j + 1].y));
-			}
 		}
 	}
 }
@@ -96,7 +94,6 @@ void	set_row(t_data *fdf, t_map *a)
 
 	i = -1;
 	fdf->flag = 0;
-	a->i = 0;
 	map = fdf->map;
 	while (++i < fdf->width)
 	{
@@ -104,13 +101,12 @@ void	set_row(t_data *fdf, t_map *a)
 		while (++j < fdf->height)
 		{
 			a->color = map[j][i].color;
+			a->i = j;
+			a->j = i;
 			if (j + 1 < fdf->height)
 			{
 				a->y = map[j + 1][i].y;
 				a->x = map[j + 1][i].x;
-				// k = ft_abs(map[j][i].color - map[j + 1][i].color)/fdf->pixel_x;
-				// a->i = k;
-				// printf("k = %d\n", k);
 			}
 			slope(fdf, a, ((map[j][i].x)), (map[j][i].y));
 		}
