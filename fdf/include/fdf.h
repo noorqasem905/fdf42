@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/18 18:22:14 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/18 22:44:56 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ struct					s_data
 	float				pixel_y;
 	void				*mlx_init;
 	void				*mlx_win;
-	char				*addr;
 	void				*img;
+	int					*addr;
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;
