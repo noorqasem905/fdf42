@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/18 22:44:56 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/19 22:31:00 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 typedef struct s_node		t_map;
 typedef struct s_data		t_data;
 typedef struct s_control	t_control;
-# define HEIGHT 1000
-# define WIDTH 1200
+# define HEIGHT 1200
+# define WIDTH 1400
 # define PI 3.14159
 # define COS_X 1.1
 # define SIN_Y 0.5
@@ -58,7 +58,9 @@ struct					s_data
 	void				*mlx_init;
 	void				*mlx_win;
 	void				*img;
-	int					*addr;
+	unsigned int		*addr;
+	unsigned int				org_color;
+	int					counter;
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;
