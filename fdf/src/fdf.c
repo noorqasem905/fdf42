@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 21:44:18 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 16:24:01 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 22:11:54 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	main(int argc, char *argv[])
 	t_data	fdf;
 
 	fdf.flag = 0;
-	fdf.press = 0;
-	fdf.zoom = 50;
 	if (argc != 2)
 	{
 		handle_error("Error\n");

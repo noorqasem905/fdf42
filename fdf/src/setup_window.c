@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 17:33:42 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 23:11:12 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	update_value(t_data *fdf)
 	fdf->control->z = 0;
 	fdf->control->zoom = 1;
 	fdf->control->graph_rm = 0;
-	fdf->control->rotation_x = 0;
-	fdf->control->rotation_y = 0;
 }
 
 int	control(int key, t_data *fdf)
@@ -42,19 +40,11 @@ int	control(int key, t_data *fdf)
 		fdf->control->graph_rm = 1;
 	else if (key == SPACE && fdf->control->graph_rm == 1)
 		fdf->control->graph_rm = 0;
-	else if (key == ROTATE_X_U)
-		fdf->control->rotation_x += 0.1;
-	else if (key == ROTATE_Y_U)
-		fdf->control->rotation_y += 0.1;
 	else if (key == RESET)
 		update_value(fdf);
-		return (0);
-	}
-	
-	// else if (key == ROTATE_X_D)
-	// 	fdf->control->rotation_x -= 0.1;
-	// else if (key == ROTATE_Y_D)
-	// 	fdf->control->rotation_y -= 0.1;
+	return (0);
+}
+
 int	close_d(int keycode, t_data *fdf)
 {
 	int	i;
@@ -72,9 +62,7 @@ int	close_d(int keycode, t_data *fdf)
 	}
 	else if (keycode == UP || keycode == DOWN || keycode == RIGHT
 		|| keycode == LEFT || keycode == ZOOM_IN || keycode == ZOOM_OUT
-		|| keycode == SPACE || keycode == RESET || keycode == ROTATE_X_U
-		|| keycode == ROTATE_Y_U || keycode == ROTATE_X_D
-		|| keycode == ROTATE_Y_D)
+		|| keycode == SPACE || keycode == RESET)
 	{
 		control(keycode, fdf);
 		ft_bzero(fdf->addr, WIDTH * HEIGHT * (fdf->bits_per_pixel / 8));
@@ -108,7 +96,6 @@ void	setup_win(t_data *fdf)
 	fdf->mlx_init = mlx_init();
 	fdf->mlx_win = mlx_new_window(fdf->mlx_init, WIDTH, HEIGHT, "FDF");
 	fdf->img = mlx_new_image(fdf->mlx_init, WIDTH, HEIGHT);
-	fdf->counter = 0;
 	fdf->addr = (unsigned int *)mlx_get_data_addr(fdf->img,
 			&(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
 	if (sset_algo(fdf))

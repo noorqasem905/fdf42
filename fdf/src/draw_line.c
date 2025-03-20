@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 18:13:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 23:09:09 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	set_isometric(t_data *fdf)
 		j = -1;
 		while (++j < fdf->width)
 		{
-				tmp = (map[i][j].x);
-				map[i][j].x = (tmp - map[i][j].y) * cos(PI / 6);
-				map[i][j].y = ((tmp + map[i][j].y) * sin(PI / 6))
-					- (map[i][j].z);
-				map[i][j].y *= fdf->pixel;
-				map[i][j].x *= fdf->pixel;
+			tmp = (map[i][j].x);
+			map[i][j].x = (tmp - map[i][j].y) * cos(PI / 6);
+			map[i][j].y = ((tmp + map[i][j].y) * sin(PI / 6))
+				- (map[i][j].z);
+			map[i][j].y *= fdf->pixel;
+			map[i][j].x *= fdf->pixel;
 		}
 	}
 }
@@ -110,40 +110,6 @@ void	set_row(t_data *fdf, t_map *a)
 			slope(fdf, a, ((map[j][i].x)), (map[j][i].y));
 		}
 	}
-}
-
-void	projection(t_data *fdf, t_data *tmp)
-{
-	int		i;
-	int		j;
-	t_map	**a;
-
-	i = -1;
-	a = fdf->map;
-	while (++i < fdf->height)
-	{
-		j = -1;
-		while (++j < fdf->width)
-		{
-			tmp->map[i][j].x = fdf->map[i][j].x;
-			tmp->map[i][j].y = fdf->map[i][j].y;
-			tmp->map[i][j].z = fdf->map[i][j].z;
-			tmp->map[i][j].color = fdf->map[i][j].color;
-		}
-	}
-	tmp->height = fdf->height;
-	tmp->width = fdf->width;
-	tmp->pixel_x = fdf->pixel_x;
-	tmp->pixel_y = fdf->pixel_y;
-	tmp->pixel = fdf->pixel;
-	tmp->flag = fdf->flag;
-	tmp->control = fdf->control;
-}
-
-void	setup_tmp(t_data *fdf, t_data *tmp)
-{
-	tmp->map = (t_map **)malloc(sizeof(t_map *) * tmp->height);
-
 }
 
 int	sset_algo(t_data *fdf)
