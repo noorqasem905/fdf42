@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 21:35:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/19 23:18:22 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 17:59:25 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	draw_map(t_data *fdf, t_map *a)
 	x = a->x;
 	y = a->y;
 	color = a->color;
-	// printf("fdf->control->x = %d\n", fdf->control->x);
-	// printf("fdf->control->y = %d\n", fdf->control->y);
 	center_x = (cos(PI / 6) * (WIDTH / 2)) + (fdf->control->x);
 	center_y = (sin(PI / 6) * (HEIGHT / 2)) + (fdf->control->y);
-	set_pixel(fdf, (x * cos(COS_X)) + (center_x), ((y * sin(SIN_Y))
-			+ ((center_y*2))), color);
+	if (fdf->control->graph_rm == 1 && a->z == 0)
+		return ;
+	set_pixel(fdf, (x * cos(COS_X) * fdf->control->zoom) + (center_x), ((y
+				* sin(SIN_Y) * fdf->control->zoom) + ((center_y))), color);
 }

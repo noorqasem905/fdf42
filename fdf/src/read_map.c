@@ -6,13 +6,13 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:35:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 17:21:08 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 17:02:17 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-void	set_color(char	*split, t_data *fdf, int y, int x)
+void	set_color(char *split, t_data *fdf, int y, int x)
 {
 	int		i;
 	char	*hexa;
@@ -29,7 +29,7 @@ void	set_color(char	*split, t_data *fdf, int y, int x)
 				hexa = ft_strdup(&split[i]);
 				fdf->map[y][x].color = hexa_to_int(hexa);
 				free(hexa);
-				break;
+				break ;
 			}
 		}
 		else
@@ -81,7 +81,7 @@ void	set_map_utils(t_data *fdf, int fd)
 		{
 			while (--y >= 0)
 				free(fdf->map[y]);
-			handle_error(ERO_MALLOC);
+			free(fdf->map);
 			errno = ENOMEM;
 			close(fd);
 			fdf->flag = 12;
@@ -94,9 +94,9 @@ void	set_map_utils(t_data *fdf, int fd)
 
 void	set_map(t_data *fdf, char *arg)
 {
-	int		x;
-	int		y;
-	int		fd;
+	int	x;
+	int	y;
+	int	fd;
 
 	fdf->map = (t_map **)malloc(sizeof(t_map *) * fdf->height);
 	if (!fdf->map)

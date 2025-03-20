@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/19 23:18:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 17:33:42 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,48 @@ void	update_value(t_data *fdf)
 {
 	fdf->control->x = 0;
 	fdf->control->y = 0;
-	fdf->control->zoom = 0;
+	fdf->control->z = 0;
+	fdf->control->zoom = 1;
 	fdf->control->graph_rm = 0;
+	fdf->control->rotation_x = 0;
+	fdf->control->rotation_y = 0;
 }
 
 int	control(int key, t_data *fdf)
 {
-	if(key == UP)
+	fdf->control->enter = 1;
+	if (key == UP)
 		fdf->control->y -= 50;
-	else if(key == DOWN)
+	else if (key == DOWN)
 		fdf->control->y += 50;
-	else if(key == RIGHT)
+	else if (key == RIGHT)
 		fdf->control->x += 50;
-	else if(key == LEFT)
+	else if (key == LEFT)
 		fdf->control->x -= 50;
-	else if(key == ZOOM_IN)
-		fdf->control->zoom += 10;
-	else if(key == ZOOM_OUT)
-		fdf->control->zoom -= 10;
-	else if(key == SPACE)
+	else if (key == ZOOM_IN)
+		fdf->control->zoom += 0.1;
+	else if (key == ZOOM_OUT)
+		fdf->control->zoom -= 0.1;
+	else if (key == SPACE && fdf->control->graph_rm == 0)
 		fdf->control->graph_rm = 1;
-	return (0);
-}
-
+	else if (key == SPACE && fdf->control->graph_rm == 1)
+		fdf->control->graph_rm = 0;
+	else if (key == ROTATE_X_U)
+		fdf->control->rotation_x += 0.1;
+	else if (key == ROTATE_Y_U)
+		fdf->control->rotation_y += 0.1;
+	else if (key == RESET)
+		update_value(fdf);
+		return (0);
+	}
+	
+	// else if (key == ROTATE_X_D)
+	// 	fdf->control->rotation_x -= 0.1;
+	// else if (key == ROTATE_Y_D)
+	// 	fdf->control->rotation_y -= 0.1;
 int	close_d(int keycode, t_data *fdf)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (keycode == ESC)
@@ -50,37 +66,20 @@ int	close_d(int keycode, t_data *fdf)
 		mlx_destroy_window(fdf->mlx_init, fdf->mlx_win);
 		mlx_destroy_display(fdf->mlx_init);
 		free(fdf->mlx_init);
+		free(fdf->control);
 		frees(fdf);
 		exit(0);
 	}
-	else if(keycode == UP || keycode == DOWN || keycode == RIGHT || keycode == LEFT
-		|| keycode == ZOOM_IN || keycode == ZOOM_OUT || keycode == SPACE)
-	{	
-		printf("Key: %d\n", keycode);
-		control(keycode, fdf);
-		// printf("fdf->control->x = %d\n", fdf->control->x);
-		// printf("fdf->control->y = %d\n", fdf->control->y);
-		// printf("fdf->control->zoom = %d\n", fdf->control->zoom);
-		if (keycode == RIGHT){
-			ft_bzero(fdf->addr, WIDTH * HEIGHT * (fdf->bits_per_pixel / 8));
-			// mlx_clear_window(fdf->mlx_init, fdf->mlx_win);
-			// fdf->img = mlx_new_image(fdf->mlx_init, WIDTH, HEIGHT);
-			fdf->counter = 0;
-			// fdf->addr = (unsigned int *)mlx_get_data_addr(fdf->img,
-			// &(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
-			sset_algo(fdf);
-	}
-	else if(keycode == LEFT)
+	else if (keycode == UP || keycode == DOWN || keycode == RIGHT
+		|| keycode == LEFT || keycode == ZOOM_IN || keycode == ZOOM_OUT
+		|| keycode == SPACE || keycode == RESET || keycode == ROTATE_X_U
+		|| keycode == ROTATE_Y_U || keycode == ROTATE_X_D
+		|| keycode == ROTATE_Y_D)
 	{
+		control(keycode, fdf);
 		ft_bzero(fdf->addr, WIDTH * HEIGHT * (fdf->bits_per_pixel / 8));
-		// mlx_clear_window(fdf->mlx_init, fdf->mlx_win);
-		// fdf->img = mlx_new_image(fdf->mlx_init, WIDTH, HEIGHT);
-		// fdf->counter = 0;
-		// fdf->addr = (unsigned int *)mlx_get_data_addr(fdf->img,
-		// &(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
 		sset_algo(fdf);
-		// mlx_put_image_to_window(fdf->mlx_init, fdf->mlx_win, fdf->img, 0, 0);
-	}
+		mlx_put_image_to_window(fdf->mlx_init, fdf->mlx_win, fdf->img, 0, 0);
 	}
 	return (0);
 }
@@ -91,19 +90,27 @@ int	close_by_cross(t_data *fdf)
 	mlx_destroy_window(fdf->mlx_init, fdf->mlx_win);
 	mlx_destroy_display(fdf->mlx_init);
 	free(fdf->mlx_init);
+	free(fdf->control);
 	frees(fdf);
 	exit(0);
 }
 
 void	setup_win(t_data *fdf)
 {
+	fdf->control = malloc(sizeof(t_control));
+	if (!fdf->control)
+	{
+		handle_error(ERO_MALLOC);
+		return ;
+	}
 	update_value(fdf);
+	fdf->control->enter = 0;
 	fdf->mlx_init = mlx_init();
 	fdf->mlx_win = mlx_new_window(fdf->mlx_init, WIDTH, HEIGHT, "FDF");
 	fdf->img = mlx_new_image(fdf->mlx_init, WIDTH, HEIGHT);
 	fdf->counter = 0;
 	fdf->addr = (unsigned int *)mlx_get_data_addr(fdf->img,
-		&(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
+			&(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
 	if (sset_algo(fdf))
 		close_d(ESC, fdf);
 	mlx_put_image_to_window(fdf->mlx_init, fdf->mlx_win, fdf->img, 0, 0);

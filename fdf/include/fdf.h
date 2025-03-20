@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/19 22:31:00 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 18:06:51 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct s_control	t_control;
 # define LEFT 65361
 # define ZOOM_IN 65451
 # define ZOOM_OUT 65453
+# define RESET 114
+# define ROTATE_X_U 119
+# define ROTATE_Y_U 115
+# define ROTATE_X_D 100
+# define ROTATE_Y_D 97
+# define ERO_USA
 # define ERO_NAME_FILE "Error : unsupported file"
 # define ERO_OPEN_FILE "Error : failed to open file"
 # define ERO_MAP "Error : map is invalid"
@@ -59,18 +65,12 @@ struct					s_data
 	void				*mlx_win;
 	void				*img;
 	unsigned int		*addr;
-	unsigned int				org_color;
-	int					counter;
 	int					bits_per_pixel;
 	int					line_length;
 	int					endian;
 	int					height;
 	int					width;
-	int					zoom;
 	int					flag;
-	float				press;
-	int					tr;
-	float				test;
 	t_control			*control;
 	t_map				**map;
 };
@@ -85,11 +85,14 @@ struct					s_node
 };
 struct					s_control
 {
-	int					x;
-	int					y;
-	int					z;
-	int					zoom;
+	float					x;
+	float					y;
+	float					z;
+	float				rotation_x;
+	float				rotation_y;
+	float				zoom;
 	int					graph_rm;
+	int					enter;
 };
 void					slope_greater_then_one(int dx, int dy, t_map *a,
 							t_data *fdf);

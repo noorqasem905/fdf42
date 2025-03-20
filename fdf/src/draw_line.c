@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/19 14:22:17 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 18:13:36 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	slope(t_data *fdf, t_map *a, float x2, float y2)
 {
-	int		x1;
-	int		y1;
-	int		dx;
-	int		dy;
+	int	x1;
+	int	y1;
+	int	dx;
+	int	dy;
 
 	x1 = a->x;
 	y1 = a->y;
@@ -37,33 +37,30 @@ void	set_isometric(t_data *fdf)
 	t_map	**map;
 	int		tmp;
 
-	fdf->flag = 0;
 	map = fdf->map;
-	if (fdf->pixel_x > fdf->pixel_y)
-		fdf->pixel = fdf->pixel_y*0.5;
-	else
-		fdf->pixel = fdf->pixel_y*0.5;
+	fdf->pixel = fdf->pixel_y * 0.5;
 	i = -1;
 	while (++i < fdf->height)
 	{
 		j = -1;
 		while (++j < fdf->width)
 		{
-			tmp = (map[i][j].x);
-			map[i][j].x = (tmp - map[i][j].y) * cos(PI / 6);
-			map[i][j].y = ((tmp + map[i][j].y) * sin(PI / 6)) - (map[i][j].z);
-			map[i][j].x *= fdf->pixel;
-			map[i][j].y *= fdf->pixel;
+				tmp = (map[i][j].x);
+				map[i][j].x = (tmp - map[i][j].y) * cos(PI / 6);
+				map[i][j].y = ((tmp + map[i][j].y) * sin(PI / 6))
+					- (map[i][j].z);
+				map[i][j].y *= fdf->pixel;
+				map[i][j].x *= fdf->pixel;
 		}
 	}
 }
 
 void	set_column(t_data *fdf, t_map *a)
 {
-	t_map		**map;
-	int			i;
-	int			j;
-	int			k;
+	t_map	**map;
+	int		i;
+	int		j;
+	int		k;
 
 	i = -1;
 	fdf->flag = 0;
@@ -79,6 +76,7 @@ void	set_column(t_data *fdf, t_map *a)
 			a->x = map[i][j].x;
 			a->i = i;
 			a->j = j;
+			a->z = map[i][j].z;
 			if (j + 1 < fdf->width)
 				slope(fdf, a, ((map[i][j + 1].x)), (map[i][j + 1].y));
 		}
@@ -90,7 +88,7 @@ void	set_row(t_data *fdf, t_map *a)
 	t_map	**map;
 	int		i;
 	int		j;
-	int			k;
+	int		k;
 
 	i = -1;
 	fdf->flag = 0;
@@ -103,6 +101,7 @@ void	set_row(t_data *fdf, t_map *a)
 			a->color = map[j][i].color;
 			a->i = j;
 			a->j = i;
+			a->z = map[j][i].z;
 			if (j + 1 < fdf->height)
 			{
 				a->y = map[j + 1][i].y;
@@ -113,24 +112,61 @@ void	set_row(t_data *fdf, t_map *a)
 	}
 }
 
+void	projection(t_data *fdf, t_data *tmp)
+{
+	int		i;
+	int		j;
+	t_map	**a;
+
+	i = -1;
+	a = fdf->map;
+	while (++i < fdf->height)
+	{
+		j = -1;
+		while (++j < fdf->width)
+		{
+			tmp->map[i][j].x = fdf->map[i][j].x;
+			tmp->map[i][j].y = fdf->map[i][j].y;
+			tmp->map[i][j].z = fdf->map[i][j].z;
+			tmp->map[i][j].color = fdf->map[i][j].color;
+		}
+	}
+	tmp->height = fdf->height;
+	tmp->width = fdf->width;
+	tmp->pixel_x = fdf->pixel_x;
+	tmp->pixel_y = fdf->pixel_y;
+	tmp->pixel = fdf->pixel;
+	tmp->flag = fdf->flag;
+	tmp->control = fdf->control;
+}
+
+void	setup_tmp(t_data *fdf, t_data *tmp)
+{
+	tmp->map = (t_map **)malloc(sizeof(t_map *) * tmp->height);
+
+}
+
 int	sset_algo(t_data *fdf)
 {
 	float	pixel_x;
 	float	pixel_y;
+	t_data	*tmp;
 	t_map	*a;
 
 	pixel_x = WIDTH / fdf->width;
 	pixel_y = HEIGHT / fdf->height;
-	printf("pixel_x = %f\n", pixel_x);
-	printf("pixel_y = %f\n", pixel_y);
 	a = malloc(sizeof(t_map));
+	if (!a)
+	{
+		handle_error(ERO_MALLOC);
+		return (1);
+	}
 	a->z = 0;
 	fdf->flag = 0;
-	fdf->press = 0;
-	fdf->tr = 0;
 	fdf->pixel_x = pixel_x;
 	fdf->pixel_y = pixel_y;
-	set_isometric(fdf);
+	if (fdf->control->enter == 0)
+		set_isometric(fdf);
 	set_column(fdf, a);
 	set_row(fdf, a);
 	free(a);

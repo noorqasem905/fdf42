@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 21:44:18 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/10 16:03:42 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/20 16:24:01 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char *argv[])
 	fdf.zoom = 50;
 	if (argc != 2)
 	{
-		printf("Error\n");
+		handle_error("Error\n");
 		return (0);
 	}
 	if (setup_fdf(&fdf, argv[1]))
@@ -32,5 +32,4 @@ int	main(int argc, char *argv[])
 	}
 	setup_win(&fdf);
 	frees(&fdf);
-	free(fdf.mlx_init);
 }
