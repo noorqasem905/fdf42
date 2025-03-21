@@ -13,7 +13,8 @@ SRCS = src/fdf.c 					\
 all: $(NAME)
 
 OBJS = $(SRCS:.c=.o)
-$(NAME): $(OBJS)
+HEADERS = include/fdf.h
+$(NAME): $(OBJS) $(HEADERS)
 	make -C libft
 	$(CC) $(CFLAGS) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Lminilibx-linux -lXext -lX11 -lm -lz -o $(NAME) -Llibft -lft -g
 
