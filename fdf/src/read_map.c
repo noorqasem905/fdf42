@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 23:35:57 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 17:02:17 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 01:18:23 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	setup_set_map(t_data *fdf, int fd, int y)
 	split = ft_split(line, ' ');
 	if (!split)
 	{
+		close(fd);
 		free(line);
 		return (1);
 	}
@@ -68,10 +69,7 @@ int	setup_set_map(t_data *fdf, int fd, int y)
 
 void	set_map_utils(t_data *fdf, int fd)
 {
-	int		x;
 	int		y;
-	char	*line;
-	char	**split;
 
 	y = -1;
 	while (++y < fdf->height)
@@ -94,8 +92,6 @@ void	set_map_utils(t_data *fdf, int fd)
 
 void	set_map(t_data *fdf, char *arg)
 {
-	int	x;
-	int	y;
 	int	fd;
 
 	fdf->map = (t_map **)malloc(sizeof(t_map *) * fdf->height);
@@ -126,7 +122,7 @@ int	setup_fdf(t_data *fdf, char *arg)
 	check_name(arg, fdf);
 	if (fdf->flag)
 		return (fdf->flag);
-	q_get_dimensions(fdf, arg);
+	fdf->flag = q_get_dimensions(fdf, arg);
 	if (fdf->height == 0 || fdf->width == 0)
 	{
 		handle_error(ERO_MAP);

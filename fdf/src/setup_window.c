@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 23:11:12 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 01:18:43 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ int	control(int key, t_data *fdf)
 
 int	close_d(int keycode, t_data *fdf)
 {
-	int	i;
-
-	i = 0;
 	if (keycode == ESC)
 	{
 		mlx_destroy_image(fdf->mlx_init, fdf->img);

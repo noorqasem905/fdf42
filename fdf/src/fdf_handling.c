@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:24:46 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 22:13:28 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 01:14:26 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,20 @@ void	handle_error(char *_error)
 	ft_putendl_fd(_error, 2);
 }
 
+int	handle_get_next_line(int fd, char *line, int flag)
+{
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (flag);
+}
+
 int	q_get_dimensions_handling(t_data *fdf, int *is_changed)
 {
-	if ((*is_changed) != (fdf)->width && (fdf)->height != 0)
+	if ((*is_changed) != (fdf)->width && (fdf)->height != 0 && fdf->flag != 4)
 	{
 		fdf->flag = 1;
 		handle_error(ERO_MAP);
@@ -56,9 +67,10 @@ int	q_get_dimensions_handling(t_data *fdf, int *is_changed)
 	{
 		handle_error(ERO_MAP);
 		write(2, "At line: ", 9);
-		ft_putnbr_fd((fdf)->height, 2);
+		ft_putnbr_fd((fdf)->height++ +1, 2);
 		write(2, "\nAt column: ", 13);
 		ft_putnbr_fd((fdf)->width, 2);
+		write(2, "\n", 1);
 		fdf->flag = 9;
 		return (fdf->flag);
 	}

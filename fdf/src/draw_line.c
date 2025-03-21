@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:56:05 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 23:09:09 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 01:19:47 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	set_column(t_data *fdf, t_map *a)
 	t_map	**map;
 	int		i;
 	int		j;
-	int		k;
 
 	i = -1;
 	fdf->flag = 0;
@@ -88,7 +87,6 @@ void	set_row(t_data *fdf, t_map *a)
 	t_map	**map;
 	int		i;
 	int		j;
-	int		k;
 
 	i = -1;
 	fdf->flag = 0;
@@ -116,7 +114,6 @@ int	sset_algo(t_data *fdf)
 {
 	float	pixel_x;
 	float	pixel_y;
-	t_data	*tmp;
 	t_map	*a;
 
 	pixel_x = WIDTH / fdf->width;

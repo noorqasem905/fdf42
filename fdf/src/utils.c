@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 17:05:48 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 16:27:18 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 00:47:11 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	get_row_length(char *line, t_data *fdf)
 	while (line[i])
 	{
 		if (!ft_isdigit(line[i]) && (line[i] != ' ' && line[i] != '-'
-				&& line[i] != '+' && !line[i]))
+				&& line[i] != '+' && line[i] != '\0' && line[i] != '\n'))
 		{
 			fdf->flag = 4;
 			return (++i);
@@ -53,7 +53,7 @@ int	get_row_length(char *line, t_data *fdf)
 			&& ft_isdigit(line[i]))
 		{
 			count++;
-			while (line[i + 1] != ' ' && line[i + 1])
+			while (line[i + 1] != ' ' && line[i + 1] != '\0')
 				i++;
 		}
 		i++;
@@ -72,7 +72,6 @@ int	q_get_dimensions(t_data *fdf, char *arg)
 	if (fd == -1)
 	{
 		handle_error(ERO_OPEN_FILE);
-		fdf->flag = 9;
 		return (9);
 	}
 	line = get_next_line(fd);
@@ -80,7 +79,7 @@ int	q_get_dimensions(t_data *fdf, char *arg)
 	{
 		(fdf)->width = get_row_length(line, fdf);
 		if (q_get_dimensions_handling(fdf, &is_changed))
-			return (fdf->flag);
+			return (handle_get_next_line(fd, line, fdf->flag));
 		free(line);
 		line = get_next_line(fd);
 		(fdf)->height++;

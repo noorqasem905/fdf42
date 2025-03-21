@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/20 23:09:45 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 01:15:32 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_control	t_control;
 # define ERO_MAP "Error : map is invalid"
 # define ERO_MALLOC "Error : malloc failed"
 # define ERO_READ "Error : read failed"
-# define ERO_FILE "The is not accessible or doesn't exist"
+# define ERO_FILE "The file is not accessible or doesn't exist"
 # define ERO_CLOSE "Error : close failed"
 # define ERO_MLX "Error : mlx failed"
 # define ERO_MLX_WIN "Error : mlx_new_window failed"
@@ -112,6 +112,7 @@ void						setup_win(t_data *fdf);
 void						frees(t_data *root);
 int							q_get_dimensions_handling(t_data *fdf,
 								int *is_changed);
+int							handle_get_next_line(int fd, char *linem, int flag);
 int							slope(t_data *fdf, t_map *a, float x2, float y2);
 int							setup_set_map(t_data *fdf, int fd, int y);
 int							get_row_length(char *line, t_data *flag);
