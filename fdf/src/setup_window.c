@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 01:18:26 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/22 01:18:43 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 17:21:17 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,19 +80,22 @@ int	close_by_cross(t_data *fdf)
 	exit(0);
 }
 
-void	setup_win(t_data *fdf)
+int	setup_win(t_data *fdf)
 {
 	fdf->control = malloc(sizeof(t_control));
 	if (!fdf->control)
-	{
-		handle_error(ERO_MALLOC);
-		return ;
-	}
+		return (12);
 	update_value(fdf);
 	fdf->control->enter = 0;
 	fdf->mlx_init = mlx_init();
+	if (!fdf->mlx_init)
+		return (handle_mlx_error(fdf, 1));
 	fdf->mlx_win = mlx_new_window(fdf->mlx_init, WIDTH, HEIGHT, "FDF");
+	if (!fdf->mlx_win)
+		return (handle_mlx_error(fdf, 2));
 	fdf->img = mlx_new_image(fdf->mlx_init, WIDTH, HEIGHT);
+	if (!fdf->img)
+		return (handle_mlx_error(fdf, 3));
 	fdf->addr = (unsigned int *)mlx_get_data_addr(fdf->img,
 			&(fdf->bits_per_pixel), &(fdf->line_length), &(fdf->endian));
 	if (sset_algo(fdf))
@@ -101,4 +104,5 @@ void	setup_win(t_data *fdf)
 	mlx_hook(fdf->mlx_win, 17, 0, close_by_cross, fdf);
 	mlx_hook(fdf->mlx_win, 2, 1L << 0, close_d, fdf);
 	mlx_loop(fdf->mlx_init);
+	return (0);
 }

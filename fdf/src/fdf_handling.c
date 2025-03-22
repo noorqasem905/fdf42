@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 16:24:46 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/22 01:14:26 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 17:21:06 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,6 @@ void	frees(t_data *root)
 		free(cur2);
 }
 
-void	frees_split(char **root)
-{
-	int	i;
-
-	i = 0;
-	while (root[i])
-	{
-		free(root[i]);
-		i++;
-	}
-	free(root);
-}
-
 void	handle_error(char *_error)
 {
 	ft_putendl_fd(_error, 2);
@@ -52,6 +39,32 @@ int	handle_get_next_line(int fd, char *line, int flag)
 	}
 	close(fd);
 	return (flag);
+}
+
+int	handle_mlx_error(t_data *fdf, int error)
+{
+	if (error == 1 && fdf->control)
+		free(fdf->control);
+	else if (error == 2 && fdf->mlx_init && fdf->control)
+	{
+		mlx_destroy_display(fdf->mlx_init);
+		free(fdf->control);
+		free(fdf->mlx_init);
+		handle_error(ERO_MLX_WIN);
+		return (error);
+	}
+	else if (error == 3 && fdf->mlx_init
+		&& fdf->control && fdf->mlx_win)
+	{
+		mlx_destroy_window(fdf->mlx_init, fdf->mlx_win);
+		mlx_destroy_display(fdf->mlx_init);
+		free(fdf->mlx_init);
+		free(fdf->control);
+		handle_error(ERO_MLX_IMG);
+		return (error);
+	}
+	handle_error(ERO_MLX);
+	return (error);
 }
 
 int	q_get_dimensions_handling(t_data *fdf, int *is_changed)

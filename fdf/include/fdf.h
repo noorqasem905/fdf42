@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 21:19:54 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/22 01:15:32 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 17:16:06 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,13 @@ void						set_map(t_data *fdf, char *arg);
 void						set_row(t_data *fdf, t_map *a);
 void						handle_error(char *_error);
 void						set_isometric(t_data *fdf);
-void						frees_split(char **root);
-void						setup_win(t_data *fdf);
 void						frees(t_data *root);
 int							q_get_dimensions_handling(t_data *fdf,
 								int *is_changed);
 int							handle_get_next_line(int fd, char *linem, int flag);
 int							slope(t_data *fdf, t_map *a, float x2, float y2);
 int							setup_set_map(t_data *fdf, int fd, int y);
+int							handle_mlx_error(t_data *fdf, int error);
 int							get_row_length(char *line, t_data *flag);
 int							q_get_dimensions(t_data *fdf, char *arg);
 int							destroy_image(int keycode, t_data *fdf);
@@ -122,5 +121,6 @@ int							close_d(int keycode, t_data *fdf);
 int							setup_fdf(t_data *fdf, char *arg);
 int							close_by_cross(t_data *fdf);
 int							sset_algo(t_data *fdf);
+int							setup_win(t_data *fdf);
 
 #endif

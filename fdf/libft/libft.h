@@ -6,7 +6,7 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:06:30 by nqasem            #+#    #+#             */
-/*   Updated: 2025/03/17 16:02:15 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 17:15:58 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void				ft_lstadd_back(t_list **lst, t_list *new);
 void				*ft_calloc(size_t n, size_t size);
 void				*ft_memchr(const void *s, int c, size_t n);
 void				ft_bzero(void *s, size_t n);
+void				frees_split(char **root);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putchar_fd(char c, int fd);

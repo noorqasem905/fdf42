@@ -6,11 +6,24 @@
 /*   By: nqasem <nqasem@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 22:04:10 by nqasem            #+#    #+#             */
-/*   Updated: 2024/12/11 09:48:36 by nqasem           ###   ########.fr       */
+/*   Updated: 2025/03/22 17:15:29 by nqasem           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+void	frees_split(char **root)
+{
+	int	i;
+
+	i = 0;
+	while (root[i])
+	{
+		free(root[i]);
+		i++;
+	}
+	free(root);
+}
 
 int	word_count(char const *s, char c)
 {
